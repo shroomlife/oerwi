@@ -3,9 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "informed": "^2.11.8",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.0"
+  },
+  "devDependencies": {
+    "@babel/runtime": "7.5.5",
+    "babel-preset-react-app": "9.0.1",
+    "informed": "2.11.8"
   },
   "scripts": {
     "start": "react-scripts start",

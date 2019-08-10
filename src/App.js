@@ -2,24 +2,33 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Form, Text } from 'informed';
+
+import List from './List.js';
+
+function Home() {
+  return (
+    <div>
+      <div className="listContainer"></div>
+      <Form>
+        <label>
+          Name:
+          <Text field="name" />
+        </label>
+        <button type="submit">Submit</button>
+      </Form>
+
+    </div>
+  );
+}
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Route path="/" exact component={Home} />
+      <Route path="/list/:id" exact component={List} />
+    </Router>
   );
 }
 
