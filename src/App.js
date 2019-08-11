@@ -44,7 +44,7 @@ export default class App extends React.Component {
     if (loadedData) {
       this.state = JSON.parse(loadedData);
     } else {
-      this.state = DEFAULT_STATE;
+      this.state = Object.assign({}, DEFAULT_STATE);
     }
 
   }
@@ -60,7 +60,7 @@ export default class App extends React.Component {
 
     currentState.lists.push(newList);
 
-    this.setState(newList, this.upload);
+    this.setState(currentState, this.upload);
     form.resetForm();
 
   }
@@ -72,12 +72,8 @@ export default class App extends React.Component {
     let newItem = Object.assign({}, DEFAULT_ITEM);
     newItem.name = data.name;
 
-    console.log(newItem);
-
     let itemKey = parseInt(data.id) - 1;
     currentState.lists[itemKey].items.push(newItem);
-
-    console.log(itemKey);
 
     this.setState(currentState, this.upload);
     form.resetForm();
@@ -91,7 +87,9 @@ export default class App extends React.Component {
   }
 
   resetAll() {
-    this.setState(DEFAULT_STATE, this.upload);
+    this.setState(Object.assign({}, DEFAULT_STATE), () => {
+      localStorage.removeItem('STORAGE');
+    });
   }
 
   upload() {
