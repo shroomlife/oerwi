@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 import { Form, Input } from '@rocketseat/unform';
 
@@ -147,10 +147,17 @@ export default class App extends React.Component {
               let selectedItemId = parseInt(props.match.params.id);
               let selectedItem = this.state.lists[selectedItemId];
 
+              if(!selectedItem) {
+                return <Redirect to="/" />
+              }
+
               return (
                 <List item={selectedItem} handleAddItem={this.handleAddItem} handleTickUp={this.handleTickUp} />
               );
 
+            }} />
+            <Route render={props => {
+              return <Redirect to="/" />;
             }} />
           </Router>
         </div>
