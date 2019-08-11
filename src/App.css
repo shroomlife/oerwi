@@ -1,11 +1,62 @@
 .App a {
   display: block;
   width: 100%;
-  padding: 1rem 0;
+  padding: 1em;
 }
 
 .listPage h2 {
   display: block;
   width: 100%;
   padding: 1rem 0;
+}
+
+.navbar {
+  margin-bottom: 1rem;
+}
+
+form {
+  padding-top: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline !important;
+  border-top: 1px solid #ccc;
+}
+
+.listContainer {
+  margin-top: 1em;
+}
+
+.listContainer a {
+  display: block;
+}
+
+.listContainer a:nth-child(even),
+.tickItem:nth-child(even) {
+  background-color: #fff;
+}
+
+.listContainer a:nth-child(odd),
+.tickItem:nth-child(odd) {
+  background-color: #eee;
+}
+
+h2 {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+h2 a {
+  margin-right: .66rem;
+}
+
+.tickItem {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1em;
+}
+
+.navbar ul button {
+  padding-left: 0;
 }
