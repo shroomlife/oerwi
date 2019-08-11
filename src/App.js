@@ -51,14 +51,13 @@ export default class App extends React.Component {
 
   handleAddList(data, form) {
 
-    let currentState = this.state;
-    currentState.counter += 1;
+    let currentState = Object.assign({}, this.state);
 
     let newList = Object.assign({}, DEFAULT_LIST);
-    newList.id = currentState.counter;
+    newList.id = currentState.lists.length;
     newList.name = data.name;
 
-    currentState.lists.push(newList);
+    currentState.lists = currentState.lists.concat([newList]);
 
     this.setState(currentState, this.upload);
     form.resetForm();
@@ -67,13 +66,13 @@ export default class App extends React.Component {
 
   handleAddItem(data, form) {
 
-    let currentState = this.state;
+    let currentState = Object.assign({}, this.state);
 
     let newItem = Object.assign({}, DEFAULT_ITEM);
     newItem.name = data.name;
 
-    let itemKey = parseInt(data.id) - 1;
-    currentState.lists[itemKey].items.push(newItem);
+    let itemKey = parseInt(data.id);
+    currentState.lists[itemKey].items = currentState.lists[itemKey].items.concat([newItem]);
 
     this.setState(currentState, this.upload);
     form.resetForm();
@@ -82,7 +81,7 @@ export default class App extends React.Component {
 
   handleTickUp(conf) {
     let currentState = this.state;
-    currentState.lists[conf.list-1].items[conf.id].ticks.push(1);
+    currentState.lists[conf.list].items[conf.id].ticks = currentState.lists[conf.list].items[conf.id].ticks.concat([true]);
     this.setState(currentState, this.upload);
   }
 
@@ -125,7 +124,7 @@ export default class App extends React.Component {
                   <div className="listContainer">
                     {this.state.lists.map((item, i) => {
                       return (
-                        <Link key={i} to={`/list/${i + 1}`}>
+                        <Link key={i} to={`/list/${i}`}>
                           <div className="listItem">
                             <span>{item.name}</span>
                           </div>
@@ -146,7 +145,7 @@ export default class App extends React.Component {
             <Route path="/list/:id" exact render={props => {
 
               let selectedItemId = parseInt(props.match.params.id);
-              let selectedItem = this.state.lists[selectedItemId - 1];
+              let selectedItem = this.state.lists[selectedItemId];
 
               return (
                 <List item={selectedItem} handleAddItem={this.handleAddItem} handleTickUp={this.handleTickUp} />
@@ -163,11 +162,6 @@ export default class App extends React.Component {
 
 class List extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = this.props.item;
-  }
-
   render() {
 
     return (
@@ -176,17 +170,17 @@ class List extends React.Component {
           <Link to="/">
             <MdArrowBack />
           </Link>
-          <span>{this.state.name}</span>
+          <span>{this.props.item.name}</span>
         </h2>
         <div className="ticks">
-          {this.state.items.map((tickItem, i) => {
+          {this.props.item.items.map((tickItem, tickKey) => {
 
             return (
-              <div key={i} className="tickItem" onClick={() => {
+              <div key={tickKey} className="tickItem" onClick={() => {
                 this.props.handleTickUp({
                   item: tickItem,
-                  id: i,
-                  list: this.state.id
+                  id: tickKey,
+                  list: this.props.item.id
                 });
               }}>
                 <span>{tickItem.name}</span>
@@ -197,7 +191,7 @@ class List extends React.Component {
           })}
         </div>
         <Form className="form-inline" onSubmit={this.props.handleAddItem}>
-          <Input type="hidden" name="id" value={this.state.id} />
+          <Input type="hidden" name="id" value={this.props.item.id} />
           <div className="form-group">
             <Input className="form-control form-control-lg" id="addNewListInput" name="name" />
           </div>
