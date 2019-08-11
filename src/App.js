@@ -13,9 +13,6 @@ import 'jquery';
 import 'popper.js';
 import 'bootstrap/dist/js/bootstrap.min';
 
-import Moment from 'react-moment';
-import 'moment-timezone';
-
 const DEFAULT_STATE = {
   lists: [],
   counter: 0
