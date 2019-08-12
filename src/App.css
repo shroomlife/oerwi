@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 1.75em 1.25em;
+  padding: 2em 1.25em;
 }
 
 form {
@@ -98,7 +98,7 @@ form {
 .listHeadline {
   display: flex;
   align-items: center;
-  padding: 1.75em 1.25em;
+  padding: 2.33em 1.25em;
   margin-bottom: 3px;
   justify-content: space-between;
 }
