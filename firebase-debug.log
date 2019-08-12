@@ -1,0 +1,27 @@
+[debug] [2019-08-12T22:17:11.739Z] ----------------------------------------------------------------------
+[debug] [2019-08-12T22:17:11.742Z] Command:       C:\code\lib\nodejs\node.exe C:\code\lib\nodejs\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2019-08-12T22:17:11.742Z] CLI Version:   7.2.2
+[debug] [2019-08-12T22:17:11.742Z] Platform:      win32
+[debug] [2019-08-12T22:17:11.742Z] Node Version:  v12.1.0
+[debug] [2019-08-12T22:17:11.744Z] Time:          Tue Aug 13 2019 00:17:11 GMT+0200 (Central European Summer Time)
+[debug] [2019-08-12T22:17:11.744Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-08-12T22:17:11.753Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-08-12T22:17:11.753Z] > authorizing via signed-in user
+[debug] [2019-08-12T22:17:11.753Z] [iam] checking project oerwilist for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-08-12T22:17:11.755Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/oerwilist:testIamPermissions  
+
+[debug] [2019-08-12T22:17:12.618Z] <<< HTTP RESPONSE 200
+[debug] [2019-08-12T22:17:12.619Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/oerwilist  
+ 
+[debug] [2019-08-12T22:17:12.844Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'oerwilist'...
+[info] 
+[info] i  deploying hosting
+[debug] [2019-08-12T22:17:12.850Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/oerwilist/versions  
+
+[debug] [2019-08-12T22:17:14.171Z] <<< HTTP RESPONSE 200
+[info] i  hosting[oerwilist]: beginning deploy...
+[info] i  hosting[oerwilist]: found 20 files in build
+[debug] [2019-08-12T22:17:14.183Z] [hosting] hash cache [YnVpbGQ] load error: lines is not defined

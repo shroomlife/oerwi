@@ -424,7 +424,7 @@ export default class App extends React.Component {
           <a className="navbar-brand" href="/">
             <img src="/logo192.png" width="32" height="32" className="d-inline-block align-top rounded-circle mr-2" alt="" />
             <span className="mr-2">oerwilist</span>
-            <span className="badge badge-danger">alpha</span>
+            <span className="badge badge-danger">alpha2</span>
           </a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

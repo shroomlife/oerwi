@@ -40,6 +40,10 @@ form {
   text-transform: uppercase;
 }
 
+.navbar .badge {
+  font-weight: normal;
+}
+
 .navbar ul button {
   padding-left: 0;
 }
