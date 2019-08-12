@@ -69,10 +69,7 @@ function registerValidSW(swUrl, config) {
               // At this point, the updated precached content has been fetched,
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
-              console.log(
-                'New content is available and will be used when all ' +
-                  'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
-              );
+              displayUpdateNotification();
 
               // Execute callback
               if (config && config.onUpdate) {
@@ -124,6 +121,22 @@ function checkValidServiceWorker(swUrl, config) {
         'No internet connection found. App is running in offline mode.'
       );
     });
+}
+
+function displayUpdateNotification() {
+
+  const link = document.createElement('a');
+  link.classList.add('update-notification');
+  link.setAttribute('href', '#');
+  link.innerHTML = 'Update is available. Click here to install.';
+ 
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.location.reload();
+  });
+ 
+  document.querySelector('body').appendChild(link);
+  
 }
 
 export function unregister() {

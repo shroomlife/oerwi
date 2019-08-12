@@ -41,15 +41,15 @@ export class Index extends React.Component {
 
                   <div className="listItem">
                     <h5>{list.name}
-                      {(listLocked ? <span className="badge badge-danger ml-2">Locked</span> : null)}</h5>
+                      {(listLocked ? <span className="badge badge-danger ml-2">L</span> : null)}</h5>
                     <small className="float-right">{list.items.length} items</small>
                   </div>
                 </Link>
 
 
                 <div className="col-2 d-flex align-items-center justify-content-around menu-separator" onClick={props => {
-                    this.props.toggleMenu(i);
-                  }}>
+                  this.props.toggleMenu(i);
+                }}>
                   <button type="button" className="btn btn-link btn-lg actionLink" >
                     <FiMoreHorizontal size="32px" />
                   </button>
@@ -71,12 +71,17 @@ export class Index extends React.Component {
                       <MdPalette />
                       <span>new color</span>
                     </button>
-                    <button className="btn btn-danger btn-lg" onClick={() => {
-                      this.props.handleRemoveList(i);
-                    }}>
-                      <MdRemoveCircle />
-                      <span>remove</span>
-                    </button>
+                    {(!listLocked ?
+
+                      <button className="btn btn-danger btn-lg" onClick={() => {
+                        this.props.handleRemoveList(i);
+                      }}>
+                        <MdRemoveCircle />
+                        <span>remove</span>
+                      </button> :
+                      null
+
+                    )}
                   </div>
                 </div>
 
@@ -87,10 +92,10 @@ export class Index extends React.Component {
         </div>
 
         <AddForm
-            type="list"
-            handleAddList={this.props.handleAddList}
-            handleAddItem={this.props.handleAddItem}
-          />
+          type="list"
+          handleAddList={this.props.handleAddList}
+          handleAddItem={this.props.handleAddItem}
+        />
 
       </div>
     );

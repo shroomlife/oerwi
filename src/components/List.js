@@ -18,7 +18,7 @@ export class List extends React.Component {
       backgroundColor: currentColorString
     };
 
-    const listId = this.props.item.id;
+    const listId = this.props.itemKey;
     const listLocked = this.props.item.locked;
 
     return (
@@ -60,12 +60,12 @@ export class List extends React.Component {
                   this.props.handleTickUp({
                     item: tickItem,
                     id: itemKey,
-                    list: this.props.item.id
+                    list: listId
                   });
                 }}>
 
                   <span className="itemName">{tickItem.name}</span>
-                  <span>{tickItem.ticks.length}</span>
+                  <span>{tickItem.ticks}</span>
                 </div>
                 <div className="col-2 d-flex align-items-center justify-content-around menu-separator" onClick={props => {
                   this.props.toggleItemMenu(listId, itemKey);
@@ -82,11 +82,17 @@ export class List extends React.Component {
                 <div className="col-12" style={menuStyle}>
                   <div className="row justify-content-between align-items-center listMenu">
 
-                    <button className="btn btn-primary btn-lg" onClick={() => {
+                  <button className="btn btn-primary btn-lg" onClick={() => {
                       this.props.handleChangeItem(listId, itemKey);
                     }}>
                       <FiEdit />
                       <span>edit name</span>
+                    </button>
+                    <button className="btn btn-secondary btn-lg" onClick={() => {
+                      this.props.handleChangeItemValue(listId, itemKey);
+                    }}>
+                      <FiEdit />
+                      <span>edit value</span>
                     </button>
                     <button className="btn btn-danger btn-lg" onClick={() => {
                       this.props.handleRemoveItem(listId, itemKey);

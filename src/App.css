@@ -19,7 +19,6 @@ form {
   display: flex;
   justify-content: space-between;
   align-items: baseline !important;
-  margin-top: 1em;
 }
 
 .listContainer a {
@@ -35,6 +34,10 @@ form {
 
 .App h2 a {
   margin-right: .66rem;
+}
+
+.App h4 .badge {
+  text-transform: uppercase;
 }
 
 .navbar ul button {
@@ -65,13 +68,19 @@ form {
   text-decoration: none !important;
 }
 
+#addNewListForm input,
+#addNewItemForm input {
+  border: 0;
+  border-top: 1px solid #2e8b57;
+}
+
 #addNewListForm button,
 #addNewItemForm button {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: .33em;
+  padding: .66em;
 }
 
 .listContainer .dropdown {
@@ -120,11 +129,29 @@ footer {
   bottom: 0;
   left: 0;
   overflow: hidden;
-  padding-bottom: 1em;
   background-color: white;
 }
 
 .App .listContainer {
-  padding-bottom: 142px;
-  padding-top: 1em;
+  margin-bottom: 106px;
+}
+
+.navbar {
+  background-color: #2e8b57;
+}
+
+.update-notification {
+  background-color: #222;
+  color: #fff;
+  display:block;
+  position: absolute;
+  bottom:0;
+  right:0;
+  padding:0.8em 1.2em;
+  text-decoration: none;
+  z-index: 999;
+}
+
+.swal2-input {
+  text-align: center;
 }
