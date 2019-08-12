@@ -118,8 +118,20 @@ function displayUpdateNotification() {
   link.innerHTML = 'Update is available. Click here to install.';
  
   link.addEventListener('click', (e) => {
+
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.filter(() => {
+          return true;
+        }).map(function(cacheName) {
+          return caches.delete(cacheName);
+        })
+      );
+    });
+
     e.preventDefault();
     window.location.reload(true);
+    
   });
  
   document.querySelector('body').appendChild(link);
