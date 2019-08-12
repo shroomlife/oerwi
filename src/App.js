@@ -65,7 +65,6 @@ export default class App extends React.Component {
     this.handleChangeItem = this.handleChangeItem.bind(this);
 
     this.handleListColorChange = this.handleListColorChange.bind(this);
-    this.handleItemColorChange = this.handleItemColorChange.bind(this);
 
     this.handleTickUp = this.handleTickUp.bind(this);
     this.resetAll = this.resetAll.bind(this);
@@ -191,12 +190,6 @@ export default class App extends React.Component {
     currentState.lists[listId].items[id].name = newName;
     this.setState(currentState, this.upload);
 
-  }
-
-  handleItemColorChange(listId, id) {
-    let currentState = Object.assign({}, this.state);
-    currentState.lists[listId].items[id].color = randomColor();
-    this.setState(currentState, this.upload);
   }
 
   handleAddItem(data, form) {

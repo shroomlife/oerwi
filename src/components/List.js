@@ -72,9 +72,6 @@ export class List extends React.Component {
 
 
                     <div className="dropdown-menu">
-                      <button className="btn btn-link" onClick={() => {
-                        this.props.handleItemColorChange(this.props.item.id, itemKey);
-                      }}><MdPalette /> new color</button>
                       <button className="btn btn-danger" onClick={() => {
                         this.props.handleRemoveItem(this.props.item.id, itemKey);
                       }}><MdRemoveCircle />  remove</button>
