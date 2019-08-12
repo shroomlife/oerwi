@@ -1,8 +1,8 @@
 {
   "name": "oerwilist",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "dependencies": {
+  "devDependencies": {
     "@rocketseat/unform": "1.5.1",
     "bootstrap": "^4.3.1",
     "react": "^16.9.0",
@@ -11,7 +11,10 @@
     "react-router-dom": "5.0.1",
     "react-scripts": "3.1.0",
     "jquery": "3.4.1",
-    "popper.js": "1.15.0"
+    "popper.js": "1.15.0",
+    "firebase": "6.3.5",
+    "react-toastify": "5.3.2",
+    "randomcolor": "0.5.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,17 +1,22 @@
 import React from 'react';
 import './App.css';
 
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
-import { Form, Input } from '@rocketseat/unform';
+import { List } from './components/List';
+import { Index } from './components/Index';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-import { MdArrowBack } from 'react-icons/md';
 
 import 'jquery';
 import 'popper.js';
 import 'bootstrap/dist/js/bootstrap.min';
+
+import * as firebase from "firebase/app";
+
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const DEFAULT_STATE = {
   lists: [],
@@ -29,13 +34,29 @@ const DEFAULT_ITEM = {
   ticks: []
 };
 
+const firebaseConfig = {
+  apiKey: "AIzaSyDtDE467cX3ifGy9r45alG2MEQJl2AMc9Q",
+  authDomain: "oerwilist.firebaseapp.com",
+  databaseURL: "https://oerwilist.firebaseio.com",
+  projectId: "oerwilist",
+  storageBucket: "",
+  messagingSenderId: "511591272153",
+  appId: "1:511591272153:web:996c5708ff500901"
+};
+
+
+
 export default class App extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.handleAddList = this.handleAddList.bind(this);
+    this.handleRemoveList = this.handleRemoveList.bind(this);
+
     this.handleAddItem = this.handleAddItem.bind(this);
+    this.handleRemoveItem = this.handleRemoveItem.bind(this);
+    
     this.handleTickUp = this.handleTickUp.bind(this);
     this.resetAll = this.resetAll.bind(this);
 
@@ -49,7 +70,20 @@ export default class App extends React.Component {
 
   }
 
+  componentDidMount() {
+    firebase.initializeApp(firebaseConfig);
+  }
+
   handleAddList(data, form) {
+
+    if (typeof data.name === 'undefined') {
+      return toast.error("name is missing");
+    }
+
+    if (data.name.length < 1) {
+      console.log('error');
+      return toast.error("name is too short");
+    }
 
     let currentState = Object.assign({}, this.state);
 
@@ -61,6 +95,32 @@ export default class App extends React.Component {
 
     this.setState(currentState, this.upload);
     form.resetForm();
+
+  }
+
+  handleRemoveList(id) {
+
+    let confirmRemove = window.confirm('really delete?');
+
+    if(confirmRemove) {
+      let currentState = Object.assign({}, this.state);
+      delete currentState.lists[id];
+      currentState.lists = currentState.lists.filter(() => {return true;});
+      this.setState(currentState, this.upload);
+    }
+
+  }
+
+  handleRemoveItem(listId, id) {
+
+    let confirmRemove = window.confirm('really delete?');
+
+    if(confirmRemove) {
+      let currentState = Object.assign({}, this.state);      
+      delete currentState.lists[listId].items[id];
+      currentState.lists[listId].items = currentState.lists[listId].items.filter(() => {return true;});
+      this.setState(currentState, this.upload);
+    }
 
   }
 
@@ -98,7 +158,8 @@ export default class App extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className="App">
+        <ToastContainer />
         <nav className="navbar navbar-light bg-light">
           <a className="navbar-brand" href="/">Örwilist</a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,48 +178,18 @@ export default class App extends React.Component {
 
         <div className="container">
           <Router>
-            <Route path="/" exact render={props => {
-
-              return (
-                <div className="App">
-                  <div className="listContainer">
-                    {this.state.lists.map((item, i) => {
-                      return (
-                        <Link key={i} to={`/list/${i}`}>
-                          <div className="listItem">
-                            <span>{item.name}</span>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                  <Form onSubmit={this.handleAddList} className="form-inline">
-                    <div className="form-group">
-                      <Input className="form-control form-control-lg" id="addNewListInput" name="name" />
-                    </div>
-                    <button type="submit" className="btn btn-primary btn-lg">Add</button>
-                  </Form>
-                </div>
-              );
-
-            }} />
-            <Route path="/list/:id" exact render={props => {
-
-              let selectedItemId = parseInt(props.match.params.id);
-              let selectedItem = this.state.lists[selectedItemId];
-
-              if(!selectedItem) {
-                return <Redirect to="/" />
-              }
-
-              return (
-                <List item={selectedItem} handleAddItem={this.handleAddItem} handleTickUp={this.handleTickUp} />
-              );
-
-            }} />
-            <Route render={props => {
-              return <Redirect to="/" />;
-            }} />
+            <Route path="/" exact render={props =>
+              <Index
+                lists={this.state.lists}
+                handleAddList={this.handleAddList}
+                handleRemoveList={this.handleRemoveList} />} />
+            <Route path="/list/:id" exact render={props =>
+              <List
+                item={this.state.lists[props.match.params.id]}
+                handleAddItem={this.handleAddItem}
+                handleTickUp={this.handleTickUp}
+                handleRemoveItem={this.handleRemoveItem} />} />
+            <Route render={() => <Redirect to="/" />} />
           </Router>
         </div>
       </div>
@@ -167,46 +198,4 @@ export default class App extends React.Component {
   }
 }
 
-class List extends React.Component {
 
-  render() {
-
-    return (
-      <div>
-        <h2>
-          <Link to="/">
-            <MdArrowBack />
-          </Link>
-          <span>{this.props.item.name}</span>
-        </h2>
-        <div className="ticks">
-          {this.props.item.items.map((tickItem, tickKey) => {
-
-            return (
-              <div key={tickKey} className="tickItem" onClick={() => {
-                this.props.handleTickUp({
-                  item: tickItem,
-                  id: tickKey,
-                  list: this.props.item.id
-                });
-              }}>
-                <span>{tickItem.name}</span>
-                <span>{tickItem.ticks.length}</span>
-              </div>
-            );
-
-          })}
-        </div>
-        <Form className="form-inline" onSubmit={this.props.handleAddItem}>
-          <Input type="hidden" name="id" value={this.props.item.id} />
-          <div className="form-group">
-            <Input className="form-control form-control-lg" id="addNewListInput" name="name" />
-          </div>
-          <button type="submit" className="btn btn-primary btn-lg">Add</button>
-        </Form>
-      </div>
-    );
-
-  }
-
-}

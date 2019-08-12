@@ -1,7 +1,7 @@
-.App a {
+.App .listContainer a {
   display: block;
   width: 100%;
-  padding: 1em;
+  padding: 1.5em 1.25em;
 }
 
 .listPage h2 {
@@ -20,6 +20,7 @@ form {
   justify-content: space-between;
   align-items: baseline !important;
   border-top: 1px solid #ccc;
+  margin-top: 1em;
 }
 
 .listContainer {
@@ -40,23 +41,33 @@ form {
   background-color: #eee;
 }
 
-h2 {
+.App h2 {
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
+  margin-bottom: 1em;
 }
 
-h2 a {
+.App h2 a {
   margin-right: .66rem;
 }
 
-.tickItem {
+.tickItemButton {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 1em;
+  padding: 1.5em 1.25em;
 }
 
 .navbar ul button {
   padding-left: 0;
+}
+
+.dropdown-toggle::before {
+  display: none !important;
+}
+
+.App .dropdown-menu button {
+  width: 100%;
+  text-align: left;
 }
