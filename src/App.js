@@ -97,7 +97,6 @@ export default class App extends React.Component {
             list.items.forEach((item) => {
 
               if (typeof item.ticks === "object") {
-                console.log(item.ticks, typeof item.ticks, item.ticks == null);
 
                 if (item.ticks == null) {
                   item.ticks = 0;
@@ -210,7 +209,6 @@ export default class App extends React.Component {
       inputValue: currentName
     }).then((result) => {
 
-      console.log(result);
       if (typeof result.value === "string" && result.value.length > 0) {
 
         let rawInputName = result.value;
@@ -293,7 +291,6 @@ export default class App extends React.Component {
     let currentState = Object.assign({}, this.state);
     let currentItem = currentState.lists[listId].items[id];
 
-    console.log(listId, id);
     Swal.fire({
       title: "change",
       input: "number",
@@ -351,7 +348,6 @@ export default class App extends React.Component {
 
   handleTickUp(conf) {
 
-    console.log(conf);
     let currentState = this.state;
 
     if (currentState.lists[conf.list].locked === true) {
