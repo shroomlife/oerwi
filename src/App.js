@@ -18,6 +18,8 @@ import * as firebase from "firebase/app";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { randomColor } from 'randomcolor';
+
 const DEFAULT_STATE = {
   lists: [],
   counter: 0
@@ -26,12 +28,14 @@ const DEFAULT_STATE = {
 const DEFAULT_LIST = {
   id: false,
   name: '',
-  items: []
+  items: [],
+  color: ''
 };
 
 const DEFAULT_ITEM = {
   name: '',
-  ticks: []
+  ticks: [],
+  color: ''
 };
 
 const firebaseConfig = {
@@ -56,7 +60,13 @@ export default class App extends React.Component {
 
     this.handleAddItem = this.handleAddItem.bind(this);
     this.handleRemoveItem = this.handleRemoveItem.bind(this);
-    
+
+    this.handleChangeList = this.handleChangeList.bind(this);
+    this.handleChangeItem = this.handleChangeItem.bind(this);
+
+    this.handleListColorChange = this.handleListColorChange.bind(this);
+    this.handleItemColorChange = this.handleItemColorChange.bind(this);
+
     this.handleTickUp = this.handleTickUp.bind(this);
     this.resetAll = this.resetAll.bind(this);
 
@@ -91,6 +101,9 @@ export default class App extends React.Component {
     newList.id = currentState.lists.length;
     newList.name = data.name;
 
+    // add random color for new list
+    newList.color = randomColor();
+
     currentState.lists = currentState.lists.concat([newList]);
 
     this.setState(currentState, this.upload);
@@ -124,12 +137,75 @@ export default class App extends React.Component {
 
   }
 
+  handleChangeList(id) {
+
+    let currentState = Object.assign({}, this.state);
+    let currentName = String(currentState.lists[id].name);
+
+    let rawInputName = window.prompt('enter new name', currentName);
+    if(rawInputName === null) {
+      return toast.error('rename canceled');
+    }
+    
+    let newName = String(rawInputName);
+
+    if(currentName === newName) {
+      return toast.warn('nothing changed');
+    }
+
+    if(newName.length < 1) {
+      return toast.error('name can\'t be empty');
+    }
+
+    currentState.lists[id].name = newName;
+    this.setState(currentState, this.upload);
+
+  }
+
+  handleListColorChange(id) {
+    let currentState = Object.assign({}, this.state);
+    currentState.lists[id].color = randomColor();
+    this.setState(currentState, this.upload);
+  }
+
+  handleChangeItem(listId, id) {
+
+    let currentState = Object.assign({}, this.state);
+    let currentName = String(currentState.lists[listId].items[id].name);
+
+    let rawInputName = window.prompt('enter new name', currentName);
+    if(rawInputName === null) {
+      return toast.error('rename canceled');
+    }
+
+    let newName = String(rawInputName);
+
+    if(currentName === newName) {
+      return toast.warn('nothing changed');
+    }
+
+    if(newName.length < 1) {
+      return toast.error('name can\'t be empty');
+    }
+
+    currentState.lists[listId].items[id].name = newName;
+    this.setState(currentState, this.upload);
+
+  }
+
+  handleItemColorChange(listId, id) {
+    let currentState = Object.assign({}, this.state);
+    currentState.lists[listId].items[id].color = randomColor();
+    this.setState(currentState, this.upload);
+  }
+
   handleAddItem(data, form) {
 
     let currentState = Object.assign({}, this.state);
 
     let newItem = Object.assign({}, DEFAULT_ITEM);
     newItem.name = data.name;
+    newItem.color = randomColor();
 
     let itemKey = parseInt(data.id);
     currentState.lists[itemKey].items = currentState.lists[itemKey].items.concat([newItem]);
@@ -140,9 +216,17 @@ export default class App extends React.Component {
   }
 
   handleTickUp(conf) {
+
     let currentState = this.state;
-    currentState.lists[conf.list].items[conf.id].ticks = currentState.lists[conf.list].items[conf.id].ticks.concat([true]);
+    let newItem = Object.assign({}, currentState.lists[conf.list].items[conf.id]);
+
+    newItem.ticks = newItem.ticks.concat([true]);
+    newItem.color = randomColor();
+
+    currentState.lists[conf.list].items[conf.id] = newItem;
+
     this.setState(currentState, this.upload);
+
   }
 
   resetAll() {
@@ -161,7 +245,10 @@ export default class App extends React.Component {
       <div className="App">
         <ToastContainer />
         <nav className="navbar navbar-light bg-light">
-          <a className="navbar-brand" href="/">Örwilist</a>
+          <a className="navbar-brand" href="/">
+          <img src="/logo192.png" width="32" height="32" className="d-inline-block align-top rounded-circle mr-1" alt="" />
+            Örwilist
+            </a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -182,13 +269,17 @@ export default class App extends React.Component {
               <Index
                 lists={this.state.lists}
                 handleAddList={this.handleAddList}
-                handleRemoveList={this.handleRemoveList} />} />
+                handleRemoveList={this.handleRemoveList}
+                handleChangeList={this.handleChangeList}
+                handleListColorChange={this.handleListColorChange} />} />
             <Route path="/list/:id" exact render={props =>
               <List
                 item={this.state.lists[props.match.params.id]}
                 handleAddItem={this.handleAddItem}
                 handleTickUp={this.handleTickUp}
-                handleRemoveItem={this.handleRemoveItem} />} />
+                handleRemoveItem={this.handleRemoveItem}
+                handleChangeItem={this.handleChangeItem}
+                handleItemColorChange={this.handleItemColorChange} />} />
             <Route render={() => <Redirect to="/" />} />
           </Router>
         </div>

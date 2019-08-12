@@ -14,7 +14,8 @@
     "popper.js": "1.15.0",
     "firebase": "6.3.5",
     "react-toastify": "5.3.2",
-    "randomcolor": "0.5.4"
+    "randomcolor": "0.5.4",
+    "hex-to-rgba": "2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
