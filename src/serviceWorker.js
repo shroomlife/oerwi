@@ -119,7 +119,7 @@ function displayUpdateNotification() {
  
   link.addEventListener('click', (e) => {
     e.preventDefault();
-    window.location.reload();
+    window.location.reload(true);
   });
  
   document.querySelector('body').appendChild(link);
