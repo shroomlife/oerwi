@@ -72,9 +72,9 @@ export class Index extends React.Component {
         <div className="col-12">
 
           <Form onSubmit={this.props.handleAddList} className="row" id="addNewListForm">
-            <Input className="form-control form-control-lg" name="name" placeholder="New List" />
+            <Input className="form-control form-control-lg" name="name" placeholder="new list" />
             <button type="submit" className="btn btn-primary btn-lg">
-              <FaPlusSquare /> add
+              <FaPlusSquare className="mr-1" /> add
             </button>
           </Form>
 

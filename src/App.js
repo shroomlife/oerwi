@@ -20,6 +20,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { randomColor } from 'randomcolor';
 
+import { TiSpiral } from 'react-icons/ti'
+
 const DEFAULT_STATE = {
   lists: [],
   counter: 0
@@ -114,10 +116,10 @@ export default class App extends React.Component {
 
     let confirmRemove = window.confirm('really delete?');
 
-    if(confirmRemove) {
+    if (confirmRemove) {
       let currentState = Object.assign({}, this.state);
       delete currentState.lists[id];
-      currentState.lists = currentState.lists.filter(() => {return true;});
+      currentState.lists = currentState.lists.filter(() => { return true; });
       this.setState(currentState, this.upload);
     }
 
@@ -127,10 +129,10 @@ export default class App extends React.Component {
 
     let confirmRemove = window.confirm('really delete?');
 
-    if(confirmRemove) {
-      let currentState = Object.assign({}, this.state);      
+    if (confirmRemove) {
+      let currentState = Object.assign({}, this.state);
       delete currentState.lists[listId].items[id];
-      currentState.lists[listId].items = currentState.lists[listId].items.filter(() => {return true;});
+      currentState.lists[listId].items = currentState.lists[listId].items.filter(() => { return true; });
       this.setState(currentState, this.upload);
     }
 
@@ -142,17 +144,17 @@ export default class App extends React.Component {
     let currentName = String(currentState.lists[id].name);
 
     let rawInputName = window.prompt('enter new name', currentName);
-    if(rawInputName === null) {
+    if (rawInputName === null) {
       return toast.error('rename canceled');
     }
-    
+
     let newName = String(rawInputName);
 
-    if(currentName === newName) {
+    if (currentName === newName) {
       return toast.warn('nothing changed');
     }
 
-    if(newName.length < 1) {
+    if (newName.length < 1) {
       return toast.error('name can\'t be empty');
     }
 
@@ -173,17 +175,17 @@ export default class App extends React.Component {
     let currentName = String(currentState.lists[listId].items[id].name);
 
     let rawInputName = window.prompt('enter new name', currentName);
-    if(rawInputName === null) {
+    if (rawInputName === null) {
       return toast.error('rename canceled');
     }
 
     let newName = String(rawInputName);
 
-    if(currentName === newName) {
+    if (currentName === newName) {
       return toast.warn('nothing changed');
     }
 
-    if(newName.length < 1) {
+    if (newName.length < 1) {
       return toast.error('name can\'t be empty');
     }
 
@@ -239,8 +241,8 @@ export default class App extends React.Component {
         <ToastContainer />
         <nav className="navbar navbar-light bg-light">
           <a className="navbar-brand" href="/">
-          <img src="/logo192.png" width="32" height="32" className="d-inline-block align-top rounded-circle mr-1" alt="" />
-            Örwilist
+            <img src="/logo192.png" width="32" height="32" className="d-inline-block align-top rounded-circle mr-1" alt="" />
+            oerwilist
             </a>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -249,7 +251,9 @@ export default class App extends React.Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <button type="button" className="btn btn-link" onClick={this.resetAll}>Alles zurücksetzen</button>
+                <button type="button" className="btn btn-link" onClick={this.resetAll}>
+                  <TiSpiral /> reset all
+                  </button>
               </li>
             </ul>
           </div>

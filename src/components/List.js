@@ -87,9 +87,9 @@ export class List extends React.Component {
         <div className="col-12">
           <Form className="row" id="addNewItemForm" onSubmit={this.props.handleAddItem}>
             <Input type="hidden" name="id" value={this.props.item.id} />
-            <Input className="form-control form-control-lg" name="name" placeholder="New Item" />
+            <Input className="form-control form-control-lg" name="name" placeholder="new item" />
             <button type="submit" className="btn btn-primary btn-lg">
-              <FaPlusSquare /> add
+              <FaPlusSquare className="mr-1" /> add
             </button>
           </Form>
         </div>
