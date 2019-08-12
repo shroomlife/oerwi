@@ -74,7 +74,7 @@ export class Index extends React.Component {
           <Form onSubmit={this.props.handleAddList} className="row" id="addNewListForm">
             <Input className="form-control form-control-lg" name="name" placeholder="New List" />
             <button type="submit" className="btn btn-primary btn-lg">
-              <FaPlusSquare />
+              <FaPlusSquare /> add
             </button>
           </Form>
 

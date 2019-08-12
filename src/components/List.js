@@ -89,7 +89,7 @@ export class List extends React.Component {
             <Input type="hidden" name="id" value={this.props.item.id} />
             <Input className="form-control form-control-lg" name="name" placeholder="New Item" />
             <button type="submit" className="btn btn-primary btn-lg">
-              <FaPlusSquare />
+              <FaPlusSquare /> add
             </button>
           </Form>
         </div>
