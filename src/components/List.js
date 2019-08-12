@@ -54,9 +54,13 @@ export class List extends React.Component {
               display: menuOpened ? 'block' : 'none'
             };
 
+            const colValues = {
+              values: listLocked ? 12 : 10
+            };
+
             return (
               <div key={itemKey} className="row tickItem" style={itemStyle}>
-                <div className="col-10 tickItemButton" onClick={() => {
+                <div className={`col-${colValues.values} tickItemButton`} onClick={() => {
                   this.props.handleTickUp({
                     item: tickItem,
                     id: itemKey,
@@ -67,7 +71,9 @@ export class List extends React.Component {
                   <span className="itemName">{tickItem.name}</span>
                   <span>{tickItem.ticks}</span>
                 </div>
-                <div className="col-2 d-flex align-items-center justify-content-around menu-separator" onClick={props => {
+
+                {(!listLocked ?
+                <div className={`col-2 d-flex align-items-center justify-content-around menu-separator`} onClick={props => {
                   this.props.toggleItemMenu(listId, itemKey);
                 }}>
 
@@ -76,9 +82,10 @@ export class List extends React.Component {
                   </button>
 
                 </div>
+                : null)}
 
-
-
+                {(!listLocked ?
+                
                 <div className="col-12" style={menuStyle}>
                   <div className="row justify-content-between align-items-center listMenu">
 
@@ -101,7 +108,8 @@ export class List extends React.Component {
                       <span>remove</span>
                     </button>
                   </div>
-                </div>
+                </div> : null)  
+              }
 
 
               </div>

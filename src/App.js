@@ -191,7 +191,7 @@ export default class App extends React.Component {
         currentState.lists[listId].items = currentState.lists[listId].items.filter(() => { return true; });
         this.setState(currentState, this.upload);
       } else {
-        this.toggleItemMenu(id);
+        this.toggleItemMenu(listId, id);
       }
 
     });
@@ -276,7 +276,7 @@ export default class App extends React.Component {
     
         currentState.lists[listId].items[id].name = newName;
         this.setState(currentState, () => {
-          this.toggleItemMenu(id);
+          this.toggleItemMenu(listId, id);
           this.upload();
         });
 
@@ -311,7 +311,10 @@ export default class App extends React.Component {
 
         if (inputValue >= 0) {
           currentItem.ticks = inputValue;
-          this.setState(currentState, this.upload);
+          this.setState(currentState, () => {
+            this.toggleItemMenu(listId, id);
+            this.upload();
+          });
         } else {
           toast.error('invalid number');
         }
@@ -407,6 +410,7 @@ export default class App extends React.Component {
 
   toggleItemMenu(listId, id) {
     let currentState = Object.assign({}, this.state);
+    console.log(currentState);
     currentState.lists[listId].items[id].menuOpened = !currentState.lists[listId].items[id].menuOpened;
     this.setState(currentState);
   }
