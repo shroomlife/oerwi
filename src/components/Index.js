@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Form, Input } from '@rocketseat/unform';
 import { FiMoreHorizontal, FiEdit } from 'react-icons/fi';
-import { FaPlusSquare } from 'react-icons/fa';
 import { MdPalette, MdRemoveCircle } from 'react-icons/md';
 
 import { randomColor } from 'randomcolor';
 import hexToRgba from 'hex-to-rgba';
+
+import { AddForm } from './AddForm';
 
 export class Index extends React.Component {
 
@@ -18,48 +18,65 @@ export class Index extends React.Component {
         <div className="col-12 listContainer">
 
 
-          {this.props.lists.map((item, i) => {
+          {this.props.lists.map((list, i) => {
 
-            const currentColor = item.color || randomColor();
+            const currentColor = list.color || randomColor();
             const currentColorString = hexToRgba(currentColor, 0.2);
 
             const listStyle = {
               backgroundColor: currentColorString
             };
 
-            return (
-              <div key={i} className="row">
+            const menuOpened = list.menuOpened || false;
+            const menuStyle = {
+              display: menuOpened ? 'block' : 'none'
+            };
 
-                <Link to={`/list/${i}`} className="col-9" style={listStyle}>
+            const listLocked = list.locked;
+
+            return (
+              <div key={i} className="row" style={listStyle}>
+
+                <Link to={`/list/${i}`} className="col-10">
 
                   <div className="listItem">
-                    <h5>{item.name}</h5>
-                    <small className="float-right">{item.items.length} items</small>
+                    <h5>{list.name}
+                      {(listLocked ? <span className="badge badge-danger ml-2">Locked</span> : null)}</h5>
+                    <small className="float-right">{list.items.length} items</small>
                   </div>
                 </Link>
 
 
-                <div className="col-3 d-flex align-items-center justify-content-around">
-                    <button type="button" className="btn btn-link btn-lg actionLink" onClick={() => {
-                        this.props.handleChangeList(i);
-                      }}>
+                <div className="col-2 d-flex align-items-center justify-content-around menu-separator" onClick={props => {
+                    this.props.toggleMenu(i);
+                  }}>
+                  <button type="button" className="btn btn-link btn-lg actionLink" >
+                    <FiMoreHorizontal size="32px" />
+                  </button>
+
+                </div>
+
+                <div className="col-12" style={menuStyle}>
+                  <div className="row justify-content-between align-items-center listMenu">
+
+                    <button className="btn btn-primary btn-lg" onClick={() => {
+                      this.props.handleChangeList(i);
+                    }}>
                       <FiEdit />
+                      <span>edit name</span>
                     </button>
-                  <div className="dropdown dropleft show">
-                    <button type="button" className="btn btn-link btn-lg dropdown-toggle actionLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <FiMoreHorizontal />
+                    <button className="btn btn-secondary btn-lg" onClick={() => {
+                      this.props.handleListColorChange(i);
+                    }}>
+                      <MdPalette />
+                      <span>new color</span>
                     </button>
-
-
-                    <div className="dropdown-menu">
-                      <button className="btn btn-link" onClick={() => {
-                        this.props.handleListColorChange(i);
-                      }}><MdPalette /> new color</button>
-                      <button className="btn btn-danger" onClick={() => {
-                        this.props.handleRemoveList(i);
-                      }}><MdRemoveCircle /> remove</button>
-                    </div>
-
+                    <button className="btn btn-danger btn-lg" onClick={() => {
+                      this.props.handleRemoveList(i);
+                    }}>
+                      <MdRemoveCircle />
+                      <span>remove</span>
+                    </button>
                   </div>
                 </div>
 
@@ -69,17 +86,11 @@ export class Index extends React.Component {
 
         </div>
 
-        <div className="col-12">
-
-          <Form onSubmit={this.props.handleAddList} className="row" id="addNewListForm">
-            <Input className="form-control form-control-lg" name="name" placeholder="new list" />
-            <button type="submit" className="btn btn-primary btn-lg">
-              <FaPlusSquare className="mr-1" /> add
-            </button>
-          </Form>
-
-        </div>
-
+        <AddForm
+            type="list"
+            handleAddList={this.props.handleAddList}
+            handleAddItem={this.props.handleAddItem}
+          />
 
       </div>
     );

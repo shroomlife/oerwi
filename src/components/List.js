@@ -1,25 +1,13 @@
 import React from 'react';
-import { MdArrowBack } from 'react-icons/md';
 import { Link } from "react-router-dom";
-import { Form, Input } from '@rocketseat/unform';
-import { FiMoreHorizontal, FiEdit } from 'react-icons/fi';
-import { FaPlusSquare } from 'react-icons/fa';
-import { MdPalette, MdRemoveCircle } from 'react-icons/md';
+import { FiMoreHorizontal, FiEdit, FiArrowLeftCircle, FiUnlock, FiLock } from 'react-icons/fi';
+import { MdRemoveCircle } from 'react-icons/md';
 
 import { randomColor } from 'randomcolor';
 import hexToRgba from 'hex-to-rgba';
+import { AddForm } from './AddForm';
 
 export class List extends React.Component {
-
-  handleTickUp(tickItem, tickKey) {
-
-    this.props.handleTickUp({
-      item: tickItem,
-      id: tickKey,
-      list: this.props.item.id
-    });
-
-  }
 
   render() {
 
@@ -30,15 +18,26 @@ export class List extends React.Component {
       backgroundColor: currentColorString
     };
 
+    const listId = this.props.item.id;
+    const listLocked = this.props.item.locked;
+
     return (
       <div className="row">
         <div className="col-12 listHeadline" style={listStyle}>
           <h4>
             <Link to="/">
-              <MdArrowBack />
+              <FiArrowLeftCircle size="28px" />
             </Link>
             <span className="ml-2">{this.props.item.name}</span>
+            {(listLocked ? <span className="badge badge-danger ml-2">Locked</span> : null)}
           </h4>
+          <div className="actions">
+            <button type="button" className="btn btn-link" onClick={() => {
+              this.props.toggleLockedList(listId);
+            }}>
+              {(listLocked ? <FiUnlock size="24px" /> : <FiLock size="24px" />)}
+            </button>
+          </div>
         </div>
         <div className="ticks col-12">
           {this.props.item.items.map((tickItem, itemKey) => {
@@ -50,49 +49,67 @@ export class List extends React.Component {
               backgroundColor: currentColorString
             };
 
+            const menuOpened = tickItem.menuOpened || false;
+            const menuStyle = {
+              display: menuOpened ? 'block' : 'none'
+            };
+
             return (
               <div key={itemKey} className="row tickItem" style={itemStyle}>
-                <div className="col-9 tickItemButton" onClick={() => {
-                  this.handleTickUp(tickItem, itemKey);
+                <div className="col-10 tickItemButton" onClick={() => {
+                  this.props.handleTickUp({
+                    item: tickItem,
+                    id: itemKey,
+                    list: this.props.item.id
+                  });
                 }}>
 
-                  <span>{tickItem.name}</span>
+                  <span className="itemName">{tickItem.name}</span>
                   <span>{tickItem.ticks.length}</span>
                 </div>
-                <div className="col-3 d-flex align-items-center justify-content-around">
-                  <button type="button" className="btn btn-link btn-lg actionLink" onClick={() => {
-                    this.props.handleChangeItem(this.props.item.id, itemKey);
-                  }}>
-                    <FiEdit />
+                <div className="col-2 d-flex align-items-center justify-content-around menu-separator" onClick={props => {
+                  this.props.toggleItemMenu(listId, itemKey);
+                }}>
+
+                  <button type="button" className="btn btn-link btn-lg actionLink" >
+                    <FiMoreHorizontal size="32px" />
                   </button>
-                  <div className="dropdown dropleft show">
-                    <button type="button" className="btn btn-link btn-lg dropdown-toggle actionLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <FiMoreHorizontal />
+
+                </div>
+
+
+
+                <div className="col-12" style={menuStyle}>
+                  <div className="row justify-content-between align-items-center listMenu">
+
+                    <button className="btn btn-primary btn-lg" onClick={() => {
+                      this.props.handleChangeItem(listId, itemKey);
+                    }}>
+                      <FiEdit />
+                      <span>edit name</span>
                     </button>
-
-
-                    <div className="dropdown-menu">
-                      <button className="btn btn-danger" onClick={() => {
-                        this.props.handleRemoveItem(this.props.item.id, itemKey);
-                      }}><MdRemoveCircle />  remove</button>
-                    </div>
-
+                    <button className="btn btn-danger btn-lg" onClick={() => {
+                      this.props.handleRemoveItem(listId, itemKey);
+                    }}>
+                      <MdRemoveCircle />
+                      <span>remove</span>
+                    </button>
                   </div>
                 </div>
+
+
               </div>
             );
 
           })}
         </div>
-        <div className="col-12">
-          <Form className="row" id="addNewItemForm" onSubmit={this.props.handleAddItem}>
-            <Input type="hidden" name="id" value={this.props.item.id} />
-            <Input className="form-control form-control-lg" name="name" placeholder="new item" />
-            <button type="submit" className="btn btn-primary btn-lg">
-              <FaPlusSquare className="mr-1" /> add
-            </button>
-          </Form>
-        </div>
+        
+        <AddForm
+            type="item"
+            listId={listId}
+            handleAddList={this.props.handleAddList}
+            handleAddItem={this.props.handleAddItem}
+          />
       </div>
     );
 

@@ -20,7 +20,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { randomColor } from 'randomcolor';
 
-import { TiSpiral } from 'react-icons/ti'
+import { TiSpiral } from 'react-icons/ti';
+
+import swal from 'sweetalert';
 
 const DEFAULT_STATE = {
   lists: [],
@@ -31,13 +33,16 @@ const DEFAULT_LIST = {
   id: false,
   name: '',
   items: [],
-  color: ''
+  color: '',
+  locked: false,
+  menuOpened: false
 };
 
 const DEFAULT_ITEM = {
   name: '',
   ticks: [],
-  color: ''
+  color: '',
+  menuOpened: false
 };
 
 const firebaseConfig = {
@@ -68,13 +73,38 @@ export default class App extends React.Component {
 
     this.handleListColorChange = this.handleListColorChange.bind(this);
 
+    this.toggleMenu = this.toggleMenu.bind(this);
+    this.toggleLockedList = this.toggleLockedList.bind(this);
+
+    this.toggleItemMenu = this.toggleItemMenu.bind(this);
+
     this.handleTickUp = this.handleTickUp.bind(this);
     this.resetAll = this.resetAll.bind(this);
 
     let loadedData = localStorage.getItem('STORAGE');
 
     if (loadedData) {
-      this.state = JSON.parse(loadedData);
+
+      let parsedState = JSON.parse(loadedData);
+
+      if (parsedState.lists.length) {
+
+        parsedState.lists.forEach((list) => {
+          list.menuOpened = DEFAULT_LIST.menuOpened;
+          list.locked = list.locked || DEFAULT_LIST.locked;
+
+          if (list.items.length) {
+            list.items.forEach((item) => {
+              item.menuOpened = DEFAULT_ITEM.menuOpened;
+            });
+          }
+
+        });
+
+      }
+
+      this.state = parsedState;
+
     } else {
       this.state = Object.assign({}, DEFAULT_STATE);
     }
@@ -92,7 +122,6 @@ export default class App extends React.Component {
     }
 
     if (data.name.length < 1) {
-      console.log('error');
       return toast.error("name is too short");
     }
 
@@ -114,27 +143,45 @@ export default class App extends React.Component {
 
   handleRemoveList(id) {
 
-    let confirmRemove = window.confirm('really delete?');
+    let currentState = Object.assign({}, this.state);
 
-    if (confirmRemove) {
-      let currentState = Object.assign({}, this.state);
-      delete currentState.lists[id];
-      currentState.lists = currentState.lists.filter(() => { return true; });
-      this.setState(currentState, this.upload);
-    }
+    swal({
+      buttons: true,
+      dangerMode: true,
+      icon: "warning",
+      title: "remove list",
+      content: `do you want to delete ${currentState.lists[id].name} ?`
+    }).then((confirmRemove) => {
+
+      if (confirmRemove) {
+        delete currentState.lists[id];
+        currentState.lists = currentState.lists.filter(() => { return true; });
+        this.setState(currentState, this.upload);
+      }
+
+    });
 
   }
 
   handleRemoveItem(listId, id) {
 
-    let confirmRemove = window.confirm('really delete?');
+    let currentState = Object.assign({}, this.state);
 
-    if (confirmRemove) {
-      let currentState = Object.assign({}, this.state);
-      delete currentState.lists[listId].items[id];
-      currentState.lists[listId].items = currentState.lists[listId].items.filter(() => { return true; });
-      this.setState(currentState, this.upload);
-    }
+    swal({
+      buttons: true,
+      dangerMode: true,
+      icon: "warning",
+      title: "remove item from list",
+      content: `do you want to delete ${currentState.lists[id].name} ?`
+    }).then((confirmRemove) => {
+
+      if (confirmRemove) {
+        delete currentState.lists[listId].items[id];
+        currentState.lists[listId].items = currentState.lists[listId].items.filter(() => { return true; });
+        this.setState(currentState, this.upload);
+      }
+
+    });
 
   }
 
@@ -213,6 +260,11 @@ export default class App extends React.Component {
   handleTickUp(conf) {
 
     let currentState = this.state;
+
+    if (currentState.lists[conf.list].locked === true) {
+      return;
+    }
+
     let newItem = Object.assign({}, currentState.lists[conf.list].items[conf.id]);
 
     newItem.ticks = newItem.ticks.concat([true]);
@@ -225,13 +277,50 @@ export default class App extends React.Component {
   }
 
   resetAll() {
-    this.setState(Object.assign({}, DEFAULT_STATE), () => {
-      localStorage.removeItem('STORAGE');
+
+
+    swal({
+      buttons: true,
+      dangerMode: true,
+      icon: "warning",
+      title: "reset all to defaults",
+      content: `do you want to reset all to defaults?`
+    }).then((confirmReset) => {
+
+      if (confirmReset) {
+
+        let newState = Object.assign({}, DEFAULT_STATE);
+        this.setState(newState, () => {
+          localStorage.removeItem('STORAGE');
+          this.upload();
+        })
+
+      }
+
     });
+
   }
 
   upload() {
     localStorage.setItem('STORAGE', JSON.stringify(this.state));
+  }
+
+  toggleMenu(id) {
+    let currentState = Object.assign({}, this.state);
+    currentState.lists[id].menuOpened = !currentState.lists[id].menuOpened;
+    this.setState(currentState);
+  }
+
+  toggleLockedList(id) {
+    let currentState = Object.assign({}, this.state);
+    currentState.lists[id].locked = !currentState.lists[id].locked;
+    this.setState(currentState, this.upload);
+  }
+
+  toggleItemMenu(listId, id) {
+    let currentState = Object.assign({}, this.state);
+    currentState.lists[listId].items[id].menuOpened = !currentState.lists[listId].items[id].menuOpened;
+    this.setState(currentState);
   }
 
   render() {
@@ -249,9 +338,9 @@ export default class App extends React.Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav mr-auto">
+            <ul className="navbar-nav mr-auto mt-2">
               <li className="nav-item active">
-                <button type="button" className="btn btn-link" onClick={this.resetAll}>
+                <button type="button" className="btn btn-danger btn-lg btn-block" onClick={this.resetAll}>
                   <TiSpiral /> reset all
                   </button>
               </li>
@@ -268,7 +357,8 @@ export default class App extends React.Component {
                 handleAddList={this.handleAddList}
                 handleRemoveList={this.handleRemoveList}
                 handleChangeList={this.handleChangeList}
-                handleListColorChange={this.handleListColorChange} />} />
+                handleListColorChange={this.handleListColorChange}
+                toggleMenu={this.toggleMenu} />} />
             <Route path="/list/:id" exact render={props =>
               <List
                 item={this.state.lists[props.match.params.id]}
@@ -276,14 +366,15 @@ export default class App extends React.Component {
                 handleTickUp={this.handleTickUp}
                 handleRemoveItem={this.handleRemoveItem}
                 handleChangeItem={this.handleChangeItem}
-                handleItemColorChange={this.handleItemColorChange} />} />
+                handleItemColorChange={this.handleItemColorChange}
+                toggleItemMenu={this.toggleItemMenu}
+                toggleLockedList={this.toggleLockedList} />} />
             <Route render={() => <Redirect to="/" />} />
           </Router>
         </div>
+
       </div>
     );
 
   }
 }
-
-
