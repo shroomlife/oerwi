@@ -129,10 +129,6 @@ form {
   border-left: 3px solid #fff;
 }
 
-.itemName {
-  font-weight: bold;
-}
-
 footer {
   position: fixed;
   width: 100vw;
