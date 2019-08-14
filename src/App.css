@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Handlee|Lobster|Roboto&display=swap');
+
 * {
   border-radius: 0 !important;
+}
+
+.App {
+  font-family: 'Roboto', sans-serif;
 }
 
 .App .listContainer a {
@@ -158,4 +164,26 @@ footer {
 
 .swal2-input {
   text-align: center;
+}
+
+.tickItemButton {
+  align-items: center;
+  display: flex;
+}
+
+.tickItemButton .itemName {
+  font-size: 18px;
+}
+
+.tickItemButton .itemCount {
+  font-size: 24px;
+  font-family: 'Handlee', cursive;
+  line-height: 1;
+  font-weight: bold;
+}
+
+.App .navbar-brand .brand-name {
+  font-family: 'Lobster', cursive;
+  font-size: 28px;
+  line-height: 1;
 }

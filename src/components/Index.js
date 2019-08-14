@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { FiMoreHorizontal, FiEdit } from 'react-icons/fi';
+import { FiMoreHorizontal, FiEdit, FiLock } from 'react-icons/fi';
 import { MdPalette, MdRemoveCircle } from 'react-icons/md';
 
 import { randomColor } from 'randomcolor';
@@ -40,8 +40,10 @@ export class Index extends React.Component {
                 <Link to={`/list/${i}`} className="col-10">
 
                   <div className="listItem">
-                    <h5>{list.name}
-                      {(listLocked ? <span className="badge badge-danger ml-2">L</span> : null)}</h5>
+                    <h5>
+                      {list.name}
+                      </h5>
+                      {(listLocked ? <FiLock /> : null)}
                     <small className="float-right">{list.items.length} items</small>
                   </div>
                 </Link>

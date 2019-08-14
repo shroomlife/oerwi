@@ -7,6 +7,7 @@ import { randomColor } from 'randomcolor';
 import hexToRgba from 'hex-to-rgba';
 import { AddForm } from './AddForm';
 
+
 export class List extends React.Component {
 
   render() {
@@ -21,6 +22,8 @@ export class List extends React.Component {
     const listId = this.props.itemKey;
     const listLocked = this.props.item.locked;
 
+    const listLockedButtonClassName = listLocked ? "danger" : "link";
+
     return (
       <div className="row">
         <div className="col-12 listHeadline" style={listStyle}>
@@ -29,10 +32,9 @@ export class List extends React.Component {
               <FiArrowLeftCircle size="28px" />
             </Link>
             <span className="ml-2">{this.props.item.name}</span>
-            {(listLocked ? <span className="badge badge-danger ml-2">Locked</span> : null)}
           </h4>
           <div className="actions">
-            <button type="button" className="btn btn-link" onClick={() => {
+            <button type="button" className={`btn btn-${listLockedButtonClassName}`} onClick={() => {
               this.props.toggleLockedList(listId);
             }}>
               {(listLocked ? <FiUnlock size="24px" /> : <FiLock size="24px" />)}
@@ -69,7 +71,7 @@ export class List extends React.Component {
                 }}>
 
                   <span className="itemName">{tickItem.name}</span>
-                  <span>{tickItem.ticks}</span>
+                  <span className="itemCount">{tickItem.ticks}</span>
                 </div>
 
                 {(!listLocked ?
