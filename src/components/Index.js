@@ -8,12 +8,32 @@ import hexToRgba from 'hex-to-rgba';
 
 import { AddForm } from './AddForm';
 
+import moment from 'moment';
+
+function showWelcome() {
+
+  const justNow = moment().format("H:m a");
+
+  return (
+    <div className="col-12">
+      <div className="tutorial-card">
+        <p>hey, <span className="metadata"><span className="time">{justNow}</span></span></p>
+        <p>to start with your first list, just enter the name into the field on the bottom <span className="metadata"><span className="time">{justNow}</span></span></p>
+        <p>after you created your first list, you can enter it by clicking on it <span className="metadata"><span className="time">{justNow}</span></span></p>
+        <p>much love, oerwi ♥ <span className="metadata"><span className="time">{justNow}</span></span></p>
+      </div>
+    </div>
+  );
+}
+
 export class Index extends React.Component {
 
   render() {
 
     return (
       <div className="row">
+
+        {this.props.lists.length === 0 ? showWelcome() : null}
 
         <div className="col-12 listContainer">
 
@@ -42,9 +62,11 @@ export class Index extends React.Component {
                   <div className="listItem">
                     <h5>
                       {list.name}
-                      </h5>
-                      {(listLocked ? <FiLock /> : null)}
-                    <small className="float-right">{list.items.length} items</small>
+                    </h5>
+                    <div className="listAttributes d-flex">
+                    {(listLocked ? <FiLock /> : null)}
+                    <small className="float-right ml-2">{list.items.length} items</small>
+                    </div>
                   </div>
                 </Link>
 

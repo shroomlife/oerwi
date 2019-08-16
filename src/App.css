@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Handlee|Lobster|Roboto&display=swap');
 
-* {
+html, body {
+  overscroll-behavior: none;
+}
+
+.form-control, button {
   border-radius: 0 !important;
 }
 
 .App {
+  height: 100vh;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -182,4 +187,54 @@ footer {
   font-family: 'Lobster', cursive;
   font-size: 28px;
   line-height: 1;
+}
+
+.version-badge {
+  margin-right: 1em;
+}
+
+.tutorial-card {
+}
+
+.tutorial-card p {
+  display: block;
+  color: #000;
+  clear: both;
+  line-height: 18px;
+  font-size: 15px;
+  padding: 8px;
+  position: relative;
+  margin: 8px 0;
+  max-width: 85%;
+  word-wrap: break-word;
+  background: #f0f0f0;
+  border-radius: 0 5px 5px 5px;
+  float: left;
+}
+
+.tutorial-card p::after {
+  border-width: 0px 10px 10px 0;
+  border-color: transparent #f0f0f0 transparent transparent;
+  top: 0;
+  left: -10px;
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.tutorial-card p .metadata {
+  
+  display: inline-block;
+  float: right;
+  padding: 0 0 0 7px;
+  position: relative;
+  bottom: -4px;
+}
+
+.tutorial-card p .metadata .time {
+  color: rgba(0, 0, 0, .45);
+  font-size: 11px;
+  display: inline-block;
 }

@@ -7,6 +7,23 @@ import { randomColor } from 'randomcolor';
 import hexToRgba from 'hex-to-rgba';
 import { AddForm } from './AddForm';
 
+import moment from 'moment';
+
+function showTutorial(list) {
+
+  const justNow = moment().format("H:m a");
+
+  return (
+    <div className="col-12">
+      <div className="tutorial-card">
+        <p>hey, again<span className="metadata"><span className="time">{justNow}</span></span></p>
+        <p>now it's time to add new items for {list.name} <span className="metadata"><span className="time">{justNow}</span></span></p>
+        <p>after you you added new items, you can click on them to count them up <span className="metadata"><span className="time">{justNow}</span></span></p>
+        <p>happy counting! ♥ <span className="metadata"><span className="time">{justNow}</span></span></p>
+      </div>
+    </div>
+  );
+}
 
 export class List extends React.Component {
 
@@ -26,6 +43,8 @@ export class List extends React.Component {
 
     return (
       <div className="row">
+
+
         <div className="col-12 listHeadline" style={listStyle}>
           <h4>
             <Link to="/">
@@ -41,6 +60,9 @@ export class List extends React.Component {
             </button>
           </div>
         </div>
+
+        {this.props.item.items.length === 0 ? showTutorial(this.props.item) : null}
+
         <div className="ticks col-12">
           {this.props.item.items.map((tickItem, itemKey) => {
 
@@ -75,43 +97,43 @@ export class List extends React.Component {
                 </div>
 
                 {(!listLocked ?
-                <div className={`col-2 d-flex align-items-center justify-content-around menu-separator`} onClick={props => {
-                  this.props.toggleItemMenu(listId, itemKey);
-                }}>
+                  <div className={`col-2 d-flex align-items-center justify-content-around menu-separator`} onClick={props => {
+                    this.props.toggleItemMenu(listId, itemKey);
+                  }}>
 
-                  <button type="button" className="btn btn-link btn-lg actionLink" >
-                    <FiMoreHorizontal size="32px" />
-                  </button>
+                    <button type="button" className="btn btn-link btn-lg actionLink" >
+                      <FiMoreHorizontal size="32px" />
+                    </button>
 
-                </div>
-                : null)}
+                  </div>
+                  : null)}
 
                 {(!listLocked ?
-                
-                <div className="col-12" style={menuStyle}>
-                  <div className="row justify-content-between align-items-center listMenu">
 
-                  <button className="btn btn-primary btn-lg" onClick={() => {
-                      this.props.handleChangeItem(listId, itemKey);
-                    }}>
-                      <FiEdit />
-                      <span>edit name</span>
-                    </button>
-                    <button className="btn btn-secondary btn-lg" onClick={() => {
-                      this.props.handleChangeItemValue(listId, itemKey);
-                    }}>
-                      <FiEdit />
-                      <span>edit value</span>
-                    </button>
-                    <button className="btn btn-danger btn-lg" onClick={() => {
-                      this.props.handleRemoveItem(listId, itemKey);
-                    }}>
-                      <MdRemoveCircle />
-                      <span>remove</span>
-                    </button>
-                  </div>
-                </div> : null)  
-              }
+                  <div className="col-12" style={menuStyle}>
+                    <div className="row justify-content-between align-items-center listMenu">
+
+                      <button className="btn btn-primary btn-lg" onClick={() => {
+                        this.props.handleChangeItem(listId, itemKey);
+                      }}>
+                        <FiEdit />
+                        <span>edit name</span>
+                      </button>
+                      <button className="btn btn-secondary btn-lg" onClick={() => {
+                        this.props.handleChangeItemValue(listId, itemKey);
+                      }}>
+                        <FiEdit />
+                        <span>edit value</span>
+                      </button>
+                      <button className="btn btn-danger btn-lg" onClick={() => {
+                        this.props.handleRemoveItem(listId, itemKey);
+                      }}>
+                        <MdRemoveCircle />
+                        <span>remove</span>
+                      </button>
+                    </div>
+                  </div> : null)
+                }
 
 
               </div>
@@ -119,13 +141,13 @@ export class List extends React.Component {
 
           })}
         </div>
-        
+
         <AddForm
-            type="item"
-            listId={listId}
-            handleAddList={this.props.handleAddList}
-            handleAddItem={this.props.handleAddItem}
-          />
+          type="item"
+          listId={listId}
+          handleAddList={this.props.handleAddList}
+          handleAddItem={this.props.handleAddItem}
+        />
       </div>
     );
 

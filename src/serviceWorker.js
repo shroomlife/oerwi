@@ -10,6 +10,8 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
+import Swal from 'sweetalert2';
+
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -49,6 +51,18 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
+      Swal.fire({
+        type: "info",
+        title: "new update found",
+        showCancelButton: false
+      }).then((result) => {
+  
+        if (typeof result.value === "boolean" && result.value === true) {
+          let triggerUpdateEvent = new Event('blockUi');
+          window.dispatchEvent(triggerUpdateEvent);
+        }
+  
+      });
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
@@ -112,29 +126,39 @@ function checkValidServiceWorker(swUrl, config) {
 
 function displayUpdateNotification() {
 
-  const link = document.createElement('a');
-  link.classList.add('update-notification');
-  link.setAttribute('href', '#');
-  link.innerHTML = 'Update is available. Click here to install.';
- 
-  link.addEventListener('click', (e) => {
+  let triggerUpdateEvent = new Event('blockUi');
+  window.dispatchEvent(triggerUpdateEvent);
 
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.filter(() => {
-          return true;
-        }).map(function(cacheName) {
-          return caches.delete(cacheName);
-        })
-      );
-    });
+  Swal.fire({
+    type: "info",
+    title: "new update found",
+    showCancelButton: false,
+    confirmButtonText: 'install'
+  }).then((result) => {
 
-    e.preventDefault();
-    window.location.reload(true);
-    
+    if (typeof result.value === "boolean" && result.value === true) {
+      
+      caches.keys().then(function(cacheNames) {
+        return Promise.all(
+          cacheNames.filter(() => {
+            return true;
+          }).map(function(cacheName) {
+            return caches.delete(cacheName);
+          })
+        );
+      }).then(() => {
+        window.location.reload(true);
+      });
+
+    } else {
+      let triggerUpdateEvent = new Event('unblockUi');
+      window.dispatchEvent(triggerUpdateEvent);
+    }
+
+  }).catch(() => {
+    let triggerUpdateEvent = new Event('unblockUi');
+    window.dispatchEvent(triggerUpdateEvent);
   });
- 
-  document.querySelector('body').appendChild(link);
 
 }
 

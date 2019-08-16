@@ -20,10 +20,13 @@ import { randomColor } from 'randomcolor';
 import { TiSpiral } from 'react-icons/ti';
 
 import Swal from 'sweetalert2';
+import BlockUi from 'react-block-ui';
+import 'react-block-ui/style.css';
 
 const DEFAULT_STATE = {
   lists: [],
-  counter: 0
+  counter: 0,
+  isBlocked: false
 };
 
 const DEFAULT_LIST = {
@@ -102,11 +105,25 @@ export default class App extends React.Component {
 
       }
 
+      parsedState.isBlocked = false;
+
       this.state = parsedState;
 
     } else {
       this.state = Object.assign({}, DEFAULT_STATE);
     }
+
+  }
+
+  componentDidUpdate() {
+
+    window.addEventListener('blockApp', () => {
+      this.setState({ isBlocked: true });
+    });
+
+    window.addEventListener('unblockApp', () => {
+      this.setState({ isBlocked: false });
+    });
 
   }
 
@@ -402,17 +419,21 @@ export default class App extends React.Component {
   render() {
 
     return (
-      <div className="App">
+      <BlockUi tag="div" className="App" blocking={this.state.isBlocked} message="Updating">
         <ToastContainer />
         <nav className="navbar navbar-dark">
           <a className="navbar-brand" href="/">
             <img src="/logo192.png" width="32" height="32" className="d-inline-block align-top rounded-circle mr-2" alt="" />
             <span className="brand-name mr-2">oerwi</span>
           </a>
-          <span className="badge badge-danger">alpha2.1</span>
+          <div className="navbar-right">
+            
+          <span className="badge badge-danger version-badge">alpha3</span>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
+
+          </div>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             
@@ -453,7 +474,7 @@ export default class App extends React.Component {
           </Router>
         </div>
 
-      </div>
+      </BlockUi>
     );
 
   }
