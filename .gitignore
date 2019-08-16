@@ -32,3 +32,5 @@ service-account-credentials.json
 **/package-lock.json
 
 /.firebase
+/.firebaserc
+/firebase.json

@@ -1,6 +1,6 @@
 {
   "name": "oerwi",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "dependencies": {
     "@rocketseat/unform": "1.5.1",
     "bootstrap": "4.3.1",
