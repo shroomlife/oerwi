@@ -1,6 +1,26 @@
-## Örwilist
+# oerwi
+the best counter app ever! create your list and start counting. no ads, no bullshit.
 
-https://oerwilist.web.app/
+## Getting Started
+App URL: https://oerwi.app
+
+## Installing
+
+### With Yarn
+
+```shell
+yarn install
+yarn start
+```
+
+### With NPM
+
+```shell
+npm install
+npm start
+```
+
+Go to http://localhost:3000 and start hacking!
 
 ### Used Tools & Documentations
 
