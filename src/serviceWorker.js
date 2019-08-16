@@ -51,18 +51,6 @@ function registerValidSW(swUrl, config) {
   navigator.serviceWorker
     .register(swUrl)
     .then(registration => {
-      Swal.fire({
-        type: "info",
-        title: "new update found",
-        showCancelButton: false
-      }).then((result) => {
-  
-        if (typeof result.value === "boolean" && result.value === true) {
-          let triggerUpdateEvent = new Event('blockUi');
-          window.dispatchEvent(triggerUpdateEvent);
-        }
-  
-      });
       registration.onupdatefound = () => {
         const installingWorker = registration.installing;
         if (installingWorker == null) {
