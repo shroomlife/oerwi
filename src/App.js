@@ -12,8 +12,6 @@ import 'jquery';
 import 'popper.js';
 import 'bootstrap/dist/js/bootstrap.min';
 
-import * as firebase from "firebase/app";
-
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -42,16 +40,6 @@ const DEFAULT_ITEM = {
   ticks: 0,
   color: '',
   menuOpened: false
-};
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDtDE467cX3ifGy9r45alG2MEQJl2AMc9Q",
-  authDomain: "oerwilist.firebaseapp.com",
-  databaseURL: "https://oerwilist.firebaseio.com",
-  projectId: "oerwilist",
-  storageBucket: "",
-  messagingSenderId: "511591272153",
-  appId: "1:511591272153:web:996c5708ff500901"
 };
 
 
@@ -120,10 +108,6 @@ export default class App extends React.Component {
       this.state = Object.assign({}, DEFAULT_STATE);
     }
 
-  }
-
-  componentDidMount() {
-    firebase.initializeApp(firebaseConfig);
   }
 
   handleAddList(data, form) {
