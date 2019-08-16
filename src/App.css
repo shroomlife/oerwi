@@ -238,3 +238,18 @@ footer {
   font-size: 11px;
   display: inline-block;
 }
+
+.navbar small:first-of-type {
+  margin-top: 1em;
+}
+
+.navbar small {
+  color: white;
+  display: block;
+  padding: .25em 0;
+}
+
+.navbar small a {
+  color: white !important;
+  text-decoration: underline;
+}

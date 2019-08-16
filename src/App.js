@@ -438,12 +438,14 @@ export default class App extends React.Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             
             <ul className="navbar-nav mr-auto mt-2">
-              <li className="nav-item active">
+              <li className="nav-item">
                 <button type="button" className="btn btn-danger btn-lg btn-block" onClick={this.resetAll}>
                   <TiSpiral /> reset all
                   </button>
               </li>
             </ul>
+            <small><span role="img" aria-label="developer">💻</span> developed and maintained by <a href="https://shroomlife.de" target="_blank" rel="noopener noreferrer">shroomlife</a></small>
+            <small><span role="img" aria-label="sos">🆘</span> questions? <a href="mailto:robin@shroomlife.de">write a mail</a></small>
           </div>
 
         </nav>
