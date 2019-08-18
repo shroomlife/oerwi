@@ -8,6 +8,7 @@ import hexToRgba from 'hex-to-rgba';
 import { AddForm } from './AddForm';
 
 import moment from 'moment';
+import NoListComponent from './NoListComponent';
 
 function showTutorial(list) {
 
@@ -29,6 +30,10 @@ export class List extends React.Component {
 
   render() {
 
+    if(typeof this.props.item === "undefined") {
+      return <NoListComponent />;
+    }
+
     const currentColor = this.props.item.color || randomColor();
     const currentColorString = hexToRgba(currentColor, 0.2);
 
@@ -40,6 +45,8 @@ export class List extends React.Component {
     const listLocked = this.props.item.locked;
 
     const listLockedButtonClassName = listLocked ? "danger" : "link";
+
+    let totalTicks = 0;
 
     return (
       <div className="row">
@@ -81,6 +88,8 @@ export class List extends React.Component {
             const colValues = {
               values: listLocked ? 12 : 10
             };
+
+            totalTicks += tickItem.ticks;
 
             return (
               <div key={itemKey} className="row tickItem" style={itemStyle}>
@@ -140,6 +149,16 @@ export class List extends React.Component {
             );
 
           })}
+
+          {totalTicks > 0 ? 
+            <div className="row totals">
+            <div className="col-6 text-left totalCaption">Total</div>
+            <div className="col-4 text-right totalTicks">{totalTicks}</div>
+
+          </div>
+            : null}
+
+          
         </div>
 
         <AddForm

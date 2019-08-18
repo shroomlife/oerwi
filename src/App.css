@@ -176,7 +176,8 @@ footer {
   font-size: 18px;
 }
 
-.tickItemButton .itemCount {
+.tickItemButton .itemCount,
+.totalTicks {
   font-size: 24px;
   font-family: 'Handlee', cursive;
   line-height: 1;
@@ -252,4 +253,24 @@ footer {
 .navbar small a {
   color: white !important;
   text-decoration: underline;
+}
+
+.ticks {
+  margin-bottom: 107px;
+}
+
+.errorContainer {
+  text-align: center;
+}
+
+.errorContainer h1,
+.errorContainer h2 {
+  width: 100%;
+  padding: .66rem;
+  display: block;
+}
+
+.totals {
+  border-top: 4px double #666;
+  padding: .66em 0;
 }

@@ -114,8 +114,10 @@ function checkValidServiceWorker(swUrl, config) {
 
 function displayUpdateNotification() {
 
-  let triggerUpdateEvent = new Event('blockUi');
-  window.dispatchEvent(triggerUpdateEvent);
+  let triggerBlockUiEvent = new Event('blockUi');
+  let triggerUnblockUiEvent = new Event('unblockUi');
+
+  window.dispatchEvent(triggerBlockUiEvent);
 
   Swal.fire({
     type: "info",
@@ -139,13 +141,11 @@ function displayUpdateNotification() {
       });
 
     } else {
-      let triggerUpdateEvent = new Event('unblockUi');
-      window.dispatchEvent(triggerUpdateEvent);
+      window.dispatchEvent(triggerUnblockUiEvent);
     }
 
   }).catch(() => {
-    let triggerUpdateEvent = new Event('unblockUi');
-    window.dispatchEvent(triggerUpdateEvent);
+    window.dispatchEvent(triggerUnblockUiEvent);
   });
 
 }

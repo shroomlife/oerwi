@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import { List } from './components/List';
 import { Index } from './components/Index';
@@ -44,8 +44,6 @@ const DEFAULT_ITEM = {
   color: '',
   menuOpened: false
 };
-
-
 
 export default class App extends React.Component {
 
@@ -428,7 +426,7 @@ export default class App extends React.Component {
           </a>
           <div className="navbar-right">
             
-          <span className="badge badge-danger version-badge">alpha3</span>
+          <span className="badge badge-danger version-badge">alpha4</span>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -452,27 +450,28 @@ export default class App extends React.Component {
 
         <div className="container">
           <Router>
-            <Route path="/" exact render={props =>
-              <Index
-                lists={this.state.lists}
-                handleAddList={this.handleAddList}
-                handleRemoveList={this.handleRemoveList}
-                handleChangeList={this.handleChangeList}
-                handleListColorChange={this.handleListColorChange}
-                toggleMenu={this.toggleMenu} />} />
-            <Route path="/list/:id" exact render={props =>
-              <List
-                itemKey={props.match.params.id}
-                item={this.state.lists[props.match.params.id]}
-                handleAddItem={this.handleAddItem}
-                handleTickUp={this.handleTickUp}
-                handleRemoveItem={this.handleRemoveItem}
-                handleChangeItem={this.handleChangeItem}
-                handleChangeItemValue={this.handleChangeItemValue}
-                handleItemColorChange={this.handleItemColorChange}
-                toggleItemMenu={this.toggleItemMenu}
-                toggleLockedList={this.toggleLockedList} />} />
-            <Route render={() => <Redirect to="/" />} />
+            <Switch>
+              <Route path="/list/:id" exact render={props =>
+                <List
+                  itemKey={props.match.params.id}
+                  item={this.state.lists[props.match.params.id]}
+                  handleAddItem={this.handleAddItem}
+                  handleTickUp={this.handleTickUp}
+                  handleRemoveItem={this.handleRemoveItem}
+                  handleChangeItem={this.handleChangeItem}
+                  handleChangeItemValue={this.handleChangeItemValue}
+                  handleItemColorChange={this.handleItemColorChange}
+                  toggleItemMenu={this.toggleItemMenu}
+                  toggleLockedList={this.toggleLockedList} />} />
+              <Route render={() =>
+                <Index
+                  lists={this.state.lists}
+                  handleAddList={this.handleAddList}
+                  handleRemoveList={this.handleRemoveList}
+                  handleChangeList={this.handleChangeList}
+                  handleListColorChange={this.handleListColorChange}
+                  toggleMenu={this.toggleMenu} />} />
+            </Switch>
           </Router>
         </div>
 
