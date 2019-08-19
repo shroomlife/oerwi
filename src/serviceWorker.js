@@ -10,8 +10,6 @@
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
 
-import Swal from 'sweetalert2';
-
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
     // [::1] is the IPv6 localhost address.
@@ -59,10 +57,6 @@ function registerValidSW(swUrl, config) {
         installingWorker.onstatechange = () => {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
-              // At this point, the updated precached content has been fetched,
-              // but the previous service worker will still serve the older
-              // content until all client tabs are closed.
-              displayUpdateNotification();
 
               // Execute callback
               if (config && config.onUpdate) {
@@ -110,44 +104,6 @@ function checkValidServiceWorker(swUrl, config) {
     })
     .catch(() => {
     });
-}
-
-function displayUpdateNotification() {
-
-  let triggerBlockUiEvent = new Event('blockUi');
-  let triggerUnblockUiEvent = new Event('unblockUi');
-
-  window.dispatchEvent(triggerBlockUiEvent);
-
-  Swal.fire({
-    type: "info",
-    title: "new update found",
-    showCancelButton: false,
-    confirmButtonText: 'install'
-  }).then((result) => {
-
-    if (typeof result.value === "boolean" && result.value === true) {
-      
-      caches.keys().then(function(cacheNames) {
-        return Promise.all(
-          cacheNames.filter(() => {
-            return true;
-          }).map(function(cacheName) {
-            return caches.delete(cacheName);
-          })
-        );
-      }).then(() => {
-        window.location.reload(true);
-      });
-
-    } else {
-      window.dispatchEvent(triggerUnblockUiEvent);
-    }
-
-  }).catch(() => {
-    window.dispatchEvent(triggerUnblockUiEvent);
-  });
-
 }
 
 export function unregister() {
