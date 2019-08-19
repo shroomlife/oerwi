@@ -29,8 +29,8 @@ app.get('*', (req, res) => {
 })
 
 https.createServer({
-  key: fs.readFileSync('./runtime/privkey.pem'),
-  cert: fs.readFileSync('./runtime/cert.pem')
+  key: fs.readFileSync('./.oerwi/privkey.pem'),
+  cert: fs.readFileSync('./.oerwi/cert.pem')
 }, app).listen(port, null, null, () => {
   console.log('app is listening ...');
 })
