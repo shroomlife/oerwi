@@ -65,7 +65,7 @@ export class Index extends React.Component {
                     </h5>
                     <div className="listAttributes d-flex">
                     {(listLocked ? <FiLock /> : null)}
-                    <small className="float-right ml-2">{list.items.length} <FiAlignJustify /></small>
+                    <small className="float-right ml-2">{list.items.length} <FiAlignJustify size="16px" /></small>
                     </div>
                   </div>
                 </Link>
