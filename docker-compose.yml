@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  oerwi:
+    container_name: oerwi
+    image: oerwi:0.6.0
+    build: .
+    ports:
+      - "443:8080"
