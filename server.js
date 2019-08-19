@@ -1,17 +1,36 @@
 const express = require('express')
 const https = require('https')
 const app = express()
-const port = 8008
+const port = 443
 
 const fs = require('fs');
+const path = require('path');
 
-//const staticAssets = express.static();
+const baseDir = __dirname;
 
-app.get('/', (req, res) => res.send('Hello World!'))
+const staticAssets = express.static('./build')
+
+const HOME_URL = `https://oerwi.app`;
+
+app.use((req, res, next) => {
+
+  // redirect www to non-www
+  if(req.hostname.indexOf("www") !== -1) {
+    return res.redirect(HOME_URL);
+  }
+
+  next()
+
+});
+
+app.use(staticAssets)
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(baseDir, './build/index.html'))
+})
 
 https.createServer({
   key: fs.readFileSync('./runtime/privkey.pem'),
   cert: fs.readFileSync('./runtime/cert.pem')
-}, app).listen(port, 'localhost', null, () => {
+}, app).listen(port, null, null, () => {
   console.log('app is listening ...');
 })

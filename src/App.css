@@ -16,7 +16,7 @@ html, body {
 .App .listContainer a {
   display: block;
   width: 100%;
-  padding: 1.75em 1.25em;
+  padding: 1.33em .66em;
 }
 
 .tickItemButton {

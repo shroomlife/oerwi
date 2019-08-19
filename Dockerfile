@@ -9,5 +9,5 @@ RUN yarn install --prod --non-interactive
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 443
 CMD [ "node", "./server" ]
