@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 app.use(staticAssets)
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(baseDir, './build/index.html'))
+  res.sendFile(path.resolve(baseDir, './index.html'))
 })
 
 https.createServer({

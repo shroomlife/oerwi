@@ -7,7 +7,13 @@ COPY yarn.lock .
 
 RUN yarn install --prod --non-interactive
 
-COPY . .
+# copy app 
+COPY build/ .
+COPY server.js .
+
+# copy runtime data
+RUN mkdir -p .oerwi
+COPY .oerwi/ ./.oerwi
 
 EXPOSE 443
-CMD [ "node", "./server" ]
+CMD [ "node", "server" ]
