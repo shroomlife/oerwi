@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { FiMoreHorizontal, FiEdit, FiLock } from 'react-icons/fi';
+import { FiMoreHorizontal, FiEdit, FiLock, FiAlignJustify } from 'react-icons/fi';
 import { MdPalette, MdRemoveCircle } from 'react-icons/md';
 
 import { randomColor } from 'randomcolor';
@@ -65,7 +65,7 @@ export class Index extends React.Component {
                     </h5>
                     <div className="listAttributes d-flex">
                     {(listLocked ? <FiLock /> : null)}
-                    <small className="float-right ml-2">{list.items.length} items</small>
+                    <small className="float-right ml-2">{list.items.length} <FiAlignJustify /></small>
                     </div>
                   </div>
                 </Link>
