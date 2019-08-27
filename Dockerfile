@@ -11,9 +11,9 @@ RUN apt-get update && \
     openssl genrsa -des3 -passout pass:x -out server.pass.key 2048 && \
     openssl rsa -passin pass:x -in server.pass.key -out server.key && \
     rm server.pass.key && \
-    openssl req -new -key server.key -out server.csr \
+    openssl req -new -key .oerwi/server.key -out .oerwi/server.csr \
         -subj "/C=DE/ST=Baden-Württemberg/L=Asperg/O=oerwi/OU=oerwi/CN=oerwi.app" && \
-    openssl x509 -req -days 365 -in server.csr -signkey .oerwi/server.key -out .oerwi/server.crt
+    openssl x509 -req -days 365 -in .oerwi/server.csr -signkey .oerwi/server.key -out .oerwi/server.crt
 
 COPY package.json .
 COPY yarn.lock .
