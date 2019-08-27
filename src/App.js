@@ -3,7 +3,7 @@ import './App.css';
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { List } from './components/List';
+import { List } from './components/list/List';
 import { Index } from './components/Index';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -22,6 +22,10 @@ import { TiSpiral } from 'react-icons/ti';
 import Swal from 'sweetalert2';
 import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
+
+import { v1 as uuidv1 } from 'uuid';
+
+//import { SocialIcon } from 'react-social-icons';
 
 const DEFAULT_STATE = {
   lists: [],
@@ -45,7 +49,7 @@ const DEFAULT_ITEM = {
   menuOpened: false
 };
 
-export default class App extends React.Component {
+class App extends React.Component {
 
   constructor(props) {
     super(props);
@@ -138,7 +142,7 @@ export default class App extends React.Component {
     let currentState = Object.assign({}, this.state);
 
     let newList = Object.assign({}, DEFAULT_LIST);
-    newList.id = currentState.lists.length;
+    newList.id = uuidv1();
     newList.name = data.name;
 
     // add random color for new list
@@ -157,7 +161,7 @@ export default class App extends React.Component {
 
     Swal.fire({
       type: "warning",
-      title: "remove list",
+      title: this.t('remove list'),
       text: `do you want to delete ${currentState.lists[id].name}?`,
       showCancelButton: true
     }).then((result) => {
@@ -442,8 +446,16 @@ export default class App extends React.Component {
                   </button>
               </li>
             </ul>
+
+            <button className="btn btn-primary" onClick={() => {
+              this.i18n.changeLanguage('de');
+            }}>DE</button>
+            <button className="btn btn-primary" onClick={() => {
+              this.i18n.changeLanguage('en');
+            }}>EN</button>
+
             <small><span role="img" aria-label="developer">💻</span> developed and maintained by <a href="https://shroomlife.de" target="_blank" rel="noopener noreferrer">shroomlife</a></small>
-            <small><span role="img" aria-label="sos">🆘</span> questions? <a href="mailto:robin@shroomlife.de">write a mail</a></small>
+            <small><span role="img" aria-label="sos">🆘</span> questions, feedback, hate, love? <a href="mailto:robin@shroomlife.de">mail me</a></small>
           </div>
 
         </nav>
@@ -454,7 +466,9 @@ export default class App extends React.Component {
               <Route path="/list/:id" exact render={props =>
                 <List
                   itemKey={props.match.params.id}
-                  item={this.state.lists[props.match.params.id]}
+                  item={this.state.lists.find((list) => {
+                    return String(list.id) === String(props.match.params.id);
+                  })}
                   handleAddItem={this.handleAddItem}
                   handleTickUp={this.handleTickUp}
                   handleRemoveItem={this.handleRemoveItem}
@@ -480,3 +494,5 @@ export default class App extends React.Component {
 
   }
 }
+
+export default App;

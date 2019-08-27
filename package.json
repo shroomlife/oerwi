@@ -95,7 +95,11 @@
     "sweetalert2": "8.15.3",
     "react-typist": "2.0.5",
     "react-block-ui": "1.3.1",
-    "moment": "2.24.0"
+    "moment": "2.24.0",
+    "react-social-icons": "4.1.0",
+    "i18next": "17.0.12",
+    "react-i18next": "10.12.2",
+    "i18next-browser-languagedetector": "3.0.3"
   },
   "jest": {
     "roots": [

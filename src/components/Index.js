@@ -57,7 +57,7 @@ export class Index extends React.Component {
             return (
               <div key={i} className="row" style={listStyle}>
 
-                <Link to={`/list/${i}`} className="col-10">
+                <Link to={`/list/${list.id}`} className="col-10">
 
                   <div className="listItem">
                     <h5>
