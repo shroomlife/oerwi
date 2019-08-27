@@ -6,14 +6,13 @@ ENV HOMEDIR=/usr/src/app
 # copy runtime data
 RUN mkdir -p .oerwi
 
-RUN apt-get update && \
-    apt-get install -y openssl && \
-    openssl genrsa -des3 -passout pass:x -out server.pass.key 2048 && \
-    openssl rsa -passin pass:x -in server.pass.key -out server.key && \
-    rm server.pass.key && \
-    openssl req -new -key .oerwi/server.key -out .oerwi/server.csr \
-        -subj "/C=DE/ST=Baden-Württemberg/L=Asperg/O=oerwi/OU=oerwi/CN=oerwi.app" && \
-    openssl x509 -req -days 365 -in .oerwi/server.csr -signkey .oerwi/server.key -out .oerwi/server.crt
+RUN apt-get update && apt-get install -y openssl
+RUN openssl genrsa -passout pass:x -out .oerwi/server.pass.key 2048
+RUN openssl rsa -passin pass:x -in .oerwi/server.pass.key -out .oerwi/server.key
+RUN rm .oerwi/server.pass.key
+RUN openssl req -new -key .oerwi/server.key -out .oerwi/server.csr \
+    -subj "/C=DE/ST=Baden-Württemberg/L=Asperg/O=oerwi/OU=oerwi/CN=oerwi.app"
+RUN openssl x509 -req -days 365 -in .oerwi/server.csr -signkey .oerwi/server.key -out .oerwi/server.crt
 
 COPY package.json .
 COPY yarn.lock .
