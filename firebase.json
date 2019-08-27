@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "build",
+    "site": "oerwi-dev",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

@@ -430,7 +430,7 @@ class App extends React.Component {
           </a>
           <div className="navbar-right">
             
-          <span className="badge badge-danger version-badge">alpha4</span>
+          <span className="badge badge-danger version-badge">alpha5</span>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -446,13 +446,6 @@ class App extends React.Component {
                   </button>
               </li>
             </ul>
-
-            <button className="btn btn-primary" onClick={() => {
-              this.i18n.changeLanguage('de');
-            }}>DE</button>
-            <button className="btn btn-primary" onClick={() => {
-              this.i18n.changeLanguage('en');
-            }}>EN</button>
 
             <small><span role="img" aria-label="developer">💻</span> developed and maintained by <a href="https://shroomlife.de" target="_blank" rel="noopener noreferrer">shroomlife</a></small>
             <small><span role="img" aria-label="sos">🆘</span> questions, feedback, hate, love? <a href="mailto:robin@shroomlife.de">mail me</a></small>
