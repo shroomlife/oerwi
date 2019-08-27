@@ -1,6 +1,4 @@
-# oerwi
-[![Build Status](https://travis-ci.org/shroomlife/oerwi.svg?branch=master)](https://travis-ci.org/shroomlife/oerwi)
-<br />
+# oerwi [![Build Status](https://travis-ci.org/shroomlife/oerwi.svg?branch=master)](https://travis-ci.org/shroomlife/oerwi)
 the best counter app ever! create your list and start counting. no ads, no bullshit.
 
 ## Getting Started
