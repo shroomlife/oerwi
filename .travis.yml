@@ -6,3 +6,15 @@ install:
 
 script:
 - docker-compose up -d
+
+deploy:
+  provider: script
+  script: bash scripts/deploy.sh dev.oerwi.app
+  on:
+    branch: development
+
+deploy:
+  provider: script
+  script: bash scripts/deploy.sh oerwi.app
+  on:
+    branch: master
