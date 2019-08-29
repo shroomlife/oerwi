@@ -6,7 +6,7 @@ const port = 443;
 const fs = require('fs');
 const path = require('path');
 
-const initializeDatabase = require('./rdb');
+//const initializeDatabase = require('./rdb');
 
 const baseDir = process.env.HOMEDIR;
 
@@ -25,15 +25,11 @@ app.use((req, res, next) => {
 
 app.use(staticAssets);
 
+/*
 app.post('/list/create', (req, res) => {
 	const dbHost = { host: 'localhost', port: 28015, db: 'oerwi' };
-
-	initializeDatabase(dbHost).then((connection) => {
-		res.send('Connection is working!');
-
-		connection.close();
-	});
 });
+*/
 
 app.get('*', (req, res) => {
 	res.sendFile(path.resolve(baseDir, './build/index.html'));
