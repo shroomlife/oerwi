@@ -42,8 +42,8 @@ app.get('*', (req, res) => {
 https
 	.createServer(
 		{
-			key: fs.readFileSync('./.oerwi/privkey.pem'),
-			cert: fs.readFileSync('./.oerwi/cert.pem')
+			key: fs.readFileSync('./.oerwi/server.key'),
+			cert: fs.readFileSync('./.oerwi/server.crt')
 		},
 		app
 	)
