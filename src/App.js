@@ -28,7 +28,7 @@ import { v1 as uuidv1 } from 'uuid';
 //import { SocialIcon } from 'react-social-icons';
 
 const DEFAULT_STATE = {
-  lists: [],
+  lists: {},
   counter: 0,
   isBlocked: false
 };
@@ -82,9 +82,14 @@ class App extends React.Component {
 
       if (parsedState.lists.length) {
 
+        let parsedStateListsNew = {};
         parsedState.lists.forEach((list) => {
           list.menuOpened = DEFAULT_LIST.menuOpened;
           list.locked = list.locked || DEFAULT_LIST.locked;
+
+          if(String(list.id).length < 16) {
+            list.id = uuidv1();
+          }
 
           if (list.items.length) {
             list.items.forEach((item) => {
@@ -102,8 +107,38 @@ class App extends React.Component {
               item.menuOpened = DEFAULT_ITEM.menuOpened;
             });
           }
+          
+          parsedStateListsNew[list.id] = list;
 
         });
+
+        parsedState.lists = parsedStateListsNew;
+
+      } else {
+
+        if(Object.entries(parsedState.lists)) {
+
+          let parsedStateListsNew = {};
+
+          Object.entries(parsedState.lists).map(([key, list]) => {
+
+            let intKey = parseInt(key);
+
+            if(intKey > 0 || key === 0) {
+              
+              if(String(list.id).length < 16) {
+                list.id = uuidv1();
+              }
+
+            }
+
+            parsedStateListsNew[list.id] = list;
+
+          });
+
+          parsedState.lists = parsedStateListsNew;
+
+        }
 
       }
 
@@ -148,7 +183,7 @@ class App extends React.Component {
     // add random color for new list
     newList.color = randomColor();
 
-    currentState.lists = currentState.lists.concat([newList]);
+    currentState.lists[newList.id] = newList;
 
     this.setState(currentState, this.upload);
     form.resetForm();
@@ -344,7 +379,7 @@ class App extends React.Component {
     newItem.name = data.name;
     newItem.color = randomColor();
 
-    let itemKey = parseInt(data.id);
+    let itemKey = data.id;
     currentState.lists[itemKey].items = currentState.lists[itemKey].items.concat([newItem]);
 
     this.setState(currentState, this.upload);
@@ -413,7 +448,6 @@ class App extends React.Component {
 
   toggleItemMenu(listId, id) {
     let currentState = Object.assign({}, this.state);
-    console.log(currentState);
     currentState.lists[listId].items[id].menuOpened = !currentState.lists[listId].items[id].menuOpened;
     this.setState(currentState);
   }
@@ -459,9 +493,7 @@ class App extends React.Component {
               <Route path="/list/:id" exact render={props =>
                 <List
                   itemKey={props.match.params.id}
-                  item={this.state.lists.find((list) => {
-                    return String(list.id) === String(props.match.params.id);
-                  })}
+                  item={this.state.lists[props.match.params.id]}
                   handleAddItem={this.handleAddItem}
                   handleTickUp={this.handleTickUp}
                   handleRemoveItem={this.handleRemoveItem}

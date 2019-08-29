@@ -33,12 +33,11 @@ export class Index extends React.Component {
     return (
       <div className="row">
 
-        {this.props.lists.length === 0 ? showWelcome() : null}
+        {Object.entries(this.props.lists).length === 0 ? showWelcome() : null}
 
         <div className="col-12 listContainer">
 
-
-          {this.props.lists.map((list, i) => {
+          {Object.entries(this.props.lists).map(([i, list]) => {
 
             const currentColor = list.color || randomColor();
             const currentColorString = hexToRgba(currentColor, 0.2);
