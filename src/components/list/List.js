@@ -32,9 +32,6 @@ export class List extends React.Component {
 
   render() {
 
-    
-    console.log("RENDER", this.props.item);
-
     if(typeof this.props.item === "undefined") {
       return <NoListComponent />;
     }
@@ -99,7 +96,6 @@ export class List extends React.Component {
             return (
               <div key={itemKey} className="row tickItem" style={itemStyle}>
                 <div className={`col-${colValues.values} tickItemButton`} onClick={(event) => {
-                  console.log(event.target.parentElement);
                   this.props.handleTickUp({
                     item: tickItem,
                     id: itemKey,
@@ -108,10 +104,7 @@ export class List extends React.Component {
                 }}>
                   
                   <span className="itemName">{tickItem.name}</span>
-                  <span className="itemCount">{tickItem.ticks}</span>
-
-                  <FiArrowUp className="tick-arrow tick-arrow-up" color="fff" />
-                  <FiArrowDown className="tick-arrow tick-arrow-down" color="fff" />
+                  <span className="itemCount">{tickItem.ticks}</span>                 
 
                 </div>
 
