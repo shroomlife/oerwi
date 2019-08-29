@@ -2,7 +2,8 @@
   "name": "oerwi",
   "version": "0.6.0",
   "dependencies": {
-    "express": "4.17.1"
+    "express": "4.17.1",
+    "rethinkdb": "2.3.3"
   },
   "scripts": {
     "start": "node scripts/start.js",
