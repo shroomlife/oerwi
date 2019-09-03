@@ -9,6 +9,7 @@
 
 // To learn more about the benefits of this model and instructions on how to
 // opt-in, read https://bit.ly/CRA-PWA
+import Swal from 'sweetalert2';
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||
@@ -58,6 +59,8 @@ function registerValidSW(swUrl, config) {
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
 
+              displayUpdateNotification();
+
               // Execute callback
               if (config && config.onUpdate) {
                 config.onUpdate(registration);
@@ -104,6 +107,36 @@ function checkValidServiceWorker(swUrl, config) {
     })
     .catch(() => {
     });
+}
+
+function displayUpdateNotification() {
+
+  Swal.fire({
+    type: "info",
+    title: "new update will be installed",
+    showCancelButton: false,
+    confirmButtonText: '👍'
+  }).then((result) => {
+
+    if (typeof result.value === "boolean" && result.value === true) {
+      
+      caches.keys().then(function(cacheNames) {
+        return Promise.all(
+          cacheNames.filter(() => {
+            return true;
+          }).map(function(cacheName) {
+            return caches.delete(cacheName);
+          })
+        );
+      }).then(() => {
+        window.location.reload(true);
+      });
+
+    }
+
+  }).catch(() => {
+  });
+
 }
 
 export function unregister() {
