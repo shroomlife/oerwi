@@ -132,7 +132,7 @@ class App extends React.Component {
 
             }
 
-            parsedStateListsNew[list.id] = list;
+            return parsedStateListsNew[list.id] = list;
 
           });
 
@@ -482,7 +482,7 @@ class App extends React.Component {
             </ul>
 
             <small><span role="img" aria-label="developer">💻</span> developed and maintained by <a href="https://shroomlife.de" target="_blank" rel="noopener noreferrer">shroomlife</a></small>
-            <small><span role="img" aria-label="sos">🆘</span> questions, feedback, hate, love? <a href="mailto:robin@shroomlife.de">mail me</a></small>
+            <small><span role="img" aria-label="sos">🆘</span> questions, feedback, hate, love? <a href="mailto:robin@shroomlife.de">mail me!</a></small>
           </div>
 
         </nav>

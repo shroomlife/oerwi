@@ -10,8 +10,6 @@ import { AddForm } from '../AddForm';
 import moment from 'moment';
 import NoListComponent from '../NoListComponent';
 
-import { FiArrowUp, FiArrowDown } from "react-icons/fi";
-
 function showTutorial(list) {
 
   const justNow = moment().format("H:m a");

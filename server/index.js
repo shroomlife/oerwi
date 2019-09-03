@@ -1,9 +1,6 @@
 const express = require('express');
-const https = require('https');
 const app = express();
-const port = 443;
 
-const fs = require('fs');
 const path = require('path');
 
 //const initializeDatabase = require('./rdb');
@@ -25,24 +22,20 @@ app.use((req, res, next) => {
 
 app.use(staticAssets);
 
+app.get('/version', (req, res) => {
+  const version = process.env.npm_package_version;
+  console.log("VERSION", version);
+  res.send(version);
+});
+
 /*
 app.post('/list/create', (req, res) => {
 	const dbHost = { host: 'localhost', port: 28015, db: 'oerwi' };
 });
 */
 
-app.get('*', (req, res) => {
+app.use((req, res) => {
 	res.sendFile(path.resolve(baseDir, './build/index.html'));
 });
 
-https
-	.createServer(
-		{
-			key: fs.readFileSync('./.oerwi/server.key'),
-			cert: fs.readFileSync('./.oerwi/server.crt')
-		},
-		app
-	)
-	.listen(port, null, null, () => {
-		console.log('app is listening ...');
-	});
+app.listen(80);
