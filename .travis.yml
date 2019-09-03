@@ -6,4 +6,4 @@ install:
 
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push shroomlife/oerwi:${DEPLOY_BRANCH}
+  - docker push shroomlife/oerwi:$TRAVIS_BRANCH
