@@ -494,7 +494,7 @@ class App extends React.Component {
           </a>
           <div className="navbar-right">
             
-          <span className="badge badge-danger version-badge">alpha5</span>
+          <span className="badge badge-danger version-badge">alpha6</span>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -513,6 +513,7 @@ class App extends React.Component {
 
             <small><span role="img" aria-label="developer">💻</span> developed and maintained by <a href="https://shroomlife.de" target="_blank" rel="noopener noreferrer">shroomlife</a></small>
             <small><span role="img" aria-label="sos">🆘</span> questions, feedback, hate, love? <a href="mailto:robin@shroomlife.de">mail me</a></small>
+            <small><span role="img" aria-label="language">🦜</span> bald auch auf deutsch! скоро по русски! जल्द ही सभी भाषाओं में!</small>
           </div>
 
         </nav>
