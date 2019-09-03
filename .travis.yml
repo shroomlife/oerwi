@@ -2,19 +2,8 @@ services:
   - docker
 
 install:
-  - docker build .
+  - docker build --tag shroomlife/oerwi:$TRAVIS_BRANCH .
 
 script:
-  - docker-compose up -d
-
-#deploy:
-#  provider: script
-#  script: bash scripts/deploy.sh dev.oerwi.app
-#  on:
-#    branch: development
-#
-#deploy:
-#  provider: script
-#  script: bash scripts/deploy.sh oerwi.app
-#  on:
-#    branch: master
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push shroomlife/oerwi:$TRAVIS_BRANCH
