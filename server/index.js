@@ -1,9 +1,6 @@
 const express = require('express');
-const https = require('https');
 const app = express();
-const port = 443;
 
-const fs = require('fs');
 const path = require('path');
 
 //const initializeDatabase = require('./rdb');
@@ -31,18 +28,8 @@ app.post('/list/create', (req, res) => {
 });
 */
 
-app.get('*', (req, res) => {
+app.use((req, res) => {
 	res.sendFile(path.resolve(baseDir, './build/index.html'));
 });
 
-https
-	.createServer(
-		{
-			key: fs.readFileSync('./.oerwi/server.key'),
-			cert: fs.readFileSync('./.oerwi/server.crt')
-		},
-		app
-	)
-	.listen(port, null, null, () => {
-		console.log('app is listening ...');
-	});
+app.listen(80);

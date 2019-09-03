@@ -132,7 +132,7 @@ class App extends React.Component {
 
             }
 
-            parsedStateListsNew[list.id] = list;
+            return parsedStateListsNew[list.id] = list;
 
           });
 
