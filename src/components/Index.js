@@ -71,7 +71,7 @@ export class Index extends React.Component {
 
 
                 <div className="col-2 d-flex align-items-center justify-content-around menu-separator" onClick={props => {
-                  this.props.toggleMenu(i);
+                  this.props.toggleMenu(list.id);
                 }}>
                   <button type="button" className="btn btn-link btn-lg actionLink" >
                     <FiMoreHorizontal size="32px" />
@@ -82,29 +82,24 @@ export class Index extends React.Component {
                 <div className="col-12" style={menuStyle}>
                   <div className="row justify-content-between align-items-center listMenu">
 
-                    <button className="btn btn-primary btn-lg" onClick={() => {
-                      this.props.handleChangeList(i);
-                    }}>
-                      <FiEdit />
-                      <span>edit name</span>
-                    </button>
-                    <button className="btn btn-secondary btn-lg" onClick={() => {
-                      this.props.handleListColorChange(i);
-                    }}>
-                      <MdPalette />
-                      <span>new color</span>
-                    </button>
-                    {(!listLocked ?
-
-                      <button className="btn btn-danger btn-lg" onClick={() => {
-                        this.props.handleRemoveList(i);
+                  <button className="btn btn-danger btn-lg" onClick={() => {
+                        this.props.handleRemoveList(list.id);
                       }}>
                         <MdRemoveCircle />
                         <span>remove</span>
-                      </button> :
-                      null
-
-                    )}
+                      </button>
+                    <button className="btn btn-secondary btn-lg" onClick={() => {
+                      this.props.handleListColorChange(list.id);
+                    }}>
+                      <MdPalette />
+                      <span>color</span>
+                    </button>
+                    <button className="btn btn-primary btn-lg" onClick={() => {
+                      this.props.handleChangeList(list.id);
+                    }}>
+                      <FiEdit />
+                      <span>name</span>
+                    </button>
                   </div>
                 </div>
 
