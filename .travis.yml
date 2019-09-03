@@ -2,7 +2,22 @@ services:
   - docker
 
 install:
-  - docker build .
+  - if [ ${CIRCLE_BRANCH} == "master" ]
+    then
+      export DEPLOY_BRANCH=latest
+    else
+      export DEPLOY_BRANCH=development
+    fi
+  - docker build . shroomlife/oerwi:${DEPLOY_BRANCH}
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-script:
-  - docker-compose up -d
+deploy:
+  provider: script
+  script: bash scripts/deploy.sh
+  on:
+    branch: master
+deploy:
+  provider: script
+  script: bash scripts/deploy.sh
+  on:
+    branch: development

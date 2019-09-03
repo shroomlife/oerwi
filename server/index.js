@@ -22,6 +22,12 @@ app.use((req, res, next) => {
 
 app.use(staticAssets);
 
+app.get('/version', (req, res) => {
+  const version = process.env.npm_package_version;
+  console.log("VERSION", version);
+  res.send(version);
+});
+
 /*
 app.post('/list/create', (req, res) => {
 	const dbHost = { host: 'localhost', port: 28015, db: 'oerwi' };

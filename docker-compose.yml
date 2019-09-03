@@ -1,8 +1,0 @@
-version: "3.3"
-services:
-  app:
-    container_name: oerwi.app.proxy
-    image: oerwi:latest
-  dev:
-    container_name: dev.oerwi.app.proxy
-    image: oerwi:latest
