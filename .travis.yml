@@ -4,6 +4,6 @@ services:
 install:
   - docker build --tag shroomlife/oerwi:$TRAVIS_BRANCH .
 
-after_success:
+script:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push shroomlife/oerwi:${DEPLOY_BRANCH}
