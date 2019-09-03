@@ -1,17 +1,13 @@
 services:
   - docker
 
-install:
-  - docker build . shroomlife/oerwi:$CIRCLE_BRANCH
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
 deploy:
   provider: script
-  script: bash scripts/deploy.sh
+  script: bash scripts/deploy.sh production
   on:
     branch: master
 deploy:
   provider: script
-  script: bash scripts/deploy.sh
+  script: bash scripts/deploy.sh latest
   on:
     branch: development
