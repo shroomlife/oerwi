@@ -220,7 +220,6 @@ class App extends React.Component {
 
       if (typeof result.value === "boolean" && result.value === true) {
         delete currentState.lists[id];
-        currentState.lists = Object.filter(currentState.lists, () => { return true; });
         this.setState(currentState, this.upload);
       } else {
         this.toggleMenu(id);
