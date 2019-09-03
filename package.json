@@ -9,8 +9,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "deploy-development": "node scripts/build.js && docker build --tag shroomlife/oerwi:development . && docker push shroomlife/oerwi:development",
-    "deploy-production": "node scripts/build.js && docker build --tag shroomlife/oerwi:latest . && docker push shroomlife/oerwi:latest"
+    "deploy-development": "docker build --tag shroomlife/oerwi:development . && docker push shroomlife/oerwi:development",
+    "deploy-production": "docker build --tag shroomlife/oerwi:latest . && docker push shroomlife/oerwi:latest"
   },
   "eslintConfig": {
     "extends": "react-app"
