@@ -1,6 +1,13 @@
 services:
   - docker
 
+install:
+  - docker build .
+  - echo $TRAVIS_BRANCH
+
+script:
+  - docker-compose up -d
+
 deploy:
   provider: script
   script: bash scripts/deploy.sh production
