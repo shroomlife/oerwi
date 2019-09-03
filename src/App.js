@@ -27,6 +27,22 @@ import { v1 as uuidv1 } from 'uuid';
 
 //import { SocialIcon } from 'react-social-icons';
 
+Object.filter = function( obj, predicate) {
+  var result = {}, key;
+  // ---------------^---- as noted by @CMS, 
+  //      always declare variables with the "var" keyword
+
+  for (key in obj) {
+      if (obj.hasOwnProperty(key) && !predicate(obj[key])) {
+          result[key] = obj[key];
+      }
+  }
+
+  return result;
+};
+
+const STORAGE_NAME = "STORAGE";
+
 const DEFAULT_STATE = {
   lists: {},
   counter: 0,
@@ -63,6 +79,7 @@ class App extends React.Component {
     this.handleChangeList = this.handleChangeList.bind(this);
     this.handleChangeItem = this.handleChangeItem.bind(this);
     this.handleChangeItemValue = this.handleChangeItemValue.bind(this);
+    this.handleResetItemValue = this.handleResetItemValue.bind(this);
 
     this.handleListColorChange = this.handleListColorChange.bind(this);
 
@@ -74,7 +91,7 @@ class App extends React.Component {
     this.handleTickUp = this.handleTickUp.bind(this);
     this.resetAll = this.resetAll.bind(this);
 
-    let loadedData = localStorage.getItem('STORAGE');
+    let loadedData = localStorage.getItem(STORAGE_NAME);
 
     if (loadedData) {
 
@@ -196,14 +213,14 @@ class App extends React.Component {
 
     Swal.fire({
       type: "warning",
-      title: this.t('remove list'),
+      title: 'remove list',
       text: `do you want to delete ${currentState.lists[id].name}?`,
       showCancelButton: true
     }).then((result) => {
 
       if (typeof result.value === "boolean" && result.value === true) {
         delete currentState.lists[id];
-        currentState.lists = currentState.lists.filter(() => { return true; });
+        currentState.lists = Object.filter(currentState.lists, () => { return true; });
         this.setState(currentState, this.upload);
       } else {
         this.toggleMenu(id);
@@ -363,6 +380,19 @@ class App extends React.Component {
 
   }
 
+  handleResetItemValue(listId, id) {
+
+    let currentState = Object.assign({}, this.state);
+    let currentItem = currentState.lists[listId].items[id];
+
+    currentItem.ticks = 0;
+    this.setState(currentState, () => {
+      this.toggleItemMenu(listId, id);
+      this.upload();
+    });
+
+  }
+
   handleAddItem(data, form) {
 
     if (typeof data.name === 'undefined') {
@@ -420,7 +450,7 @@ class App extends React.Component {
 
         let newState = Object.assign({}, DEFAULT_STATE);
         this.setState(newState, () => {
-          localStorage.removeItem('STORAGE');
+          localStorage.removeItem(STORAGE_NAME);
           this.upload();
         })
 
@@ -431,7 +461,7 @@ class App extends React.Component {
   }
 
   upload() {
-    localStorage.setItem('STORAGE', JSON.stringify(this.state));
+    localStorage.setItem(STORAGE_NAME, JSON.stringify(this.state));
   }
 
   toggleMenu(id) {
@@ -482,7 +512,7 @@ class App extends React.Component {
             </ul>
 
             <small><span role="img" aria-label="developer">💻</span> developed and maintained by <a href="https://shroomlife.de" target="_blank" rel="noopener noreferrer">shroomlife</a></small>
-            <small><span role="img" aria-label="sos">🆘</span> questions, feedback, hate, love? <a href="mailto:robin@shroomlife.de">mail me!</a></small>
+            <small><span role="img" aria-label="sos">🆘</span> questions, feedback, hate, love? <a href="mailto:robin@shroomlife.de">mail me</a></small>
           </div>
 
         </nav>
@@ -499,6 +529,7 @@ class App extends React.Component {
                   handleRemoveItem={this.handleRemoveItem}
                   handleChangeItem={this.handleChangeItem}
                   handleChangeItemValue={this.handleChangeItemValue}
+                  handleResetItemValue={this.handleResetItemValue}
                   handleItemColorChange={this.handleItemColorChange}
                   toggleItemMenu={this.toggleItemMenu}
                   toggleLockedList={this.toggleLockedList} />} />

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { FiMoreHorizontal, FiEdit, FiArrowLeftCircle, FiUnlock, FiLock } from 'react-icons/fi';
+import { FiMoreHorizontal, FiEdit, FiArrowLeftCircle, FiUnlock, FiLock, FiSkipBack } from 'react-icons/fi';
 import { MdRemoveCircle } from 'react-icons/md';
 
 import { randomColor } from 'randomcolor';
@@ -123,23 +123,29 @@ export class List extends React.Component {
                   <div className="col-12" style={menuStyle}>
                     <div className="row justify-content-between align-items-center listMenu">
 
-                      <button className="btn btn-primary btn-lg" onClick={() => {
-                        this.props.handleChangeItem(listId, itemKey);
+                    <button className="btn btn-danger btn-lg" onClick={() => {
+                        this.props.handleRemoveItem(listId, itemKey);
                       }}>
-                        <FiEdit />
-                        <span>edit name</span>
+                        <MdRemoveCircle />
+                        <span>remove</span>
+                      </button>
+                      <button className="btn btn-danger btn-lg" onClick={() => {
+                        this.props.handleResetItemValue(listId, itemKey);
+                      }}>
+                        <FiSkipBack />
+                        <span>reset</span>
                       </button>
                       <button className="btn btn-secondary btn-lg" onClick={() => {
                         this.props.handleChangeItemValue(listId, itemKey);
                       }}>
                         <FiEdit />
-                        <span>edit value</span>
+                        <span>value</span>
                       </button>
-                      <button className="btn btn-danger btn-lg" onClick={() => {
-                        this.props.handleRemoveItem(listId, itemKey);
+                      <button className="btn btn-primary btn-lg" onClick={() => {
+                        this.props.handleChangeItem(listId, itemKey);
                       }}>
-                        <MdRemoveCircle />
-                        <span>remove</span>
+                        <FiEdit />
+                        <span>name</span>
                       </button>
                     </div>
                   </div> : null)
