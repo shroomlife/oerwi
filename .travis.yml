@@ -1,9 +1,0 @@
-services:
-  - docker
-
-install:
-  - docker build --tag shroomlife/oerwi:$TRAVIS_BRANCH .
-
-script:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push shroomlife/oerwi:$TRAVIS_BRANCH
