@@ -1,6 +1,6 @@
 {
   "name": "oerwi",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "dependencies": {
     "express": "4.17.1",
     "rethinkdb": "2.3.3"

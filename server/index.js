@@ -20,13 +20,13 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use(staticAssets);
-
 app.get('/version', (req, res) => {
   const version = process.env.npm_package_version;
   console.log("VERSION", version);
   res.send(version);
 });
+
+app.use(staticAssets);
 
 /*
 app.post('/list/create', (req, res) => {
