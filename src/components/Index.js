@@ -78,8 +78,7 @@ export class Index extends React.Component {
                   </button>
 
                 </div>
-
-                <div className="col-12" style={menuStyle}>
+                {list.menuOpened === true ? <div className="col-12" style={menuStyle}>
                   <div className="row justify-content-between align-items-center listMenu">
 
                   <button className="btn btn-danger btn-lg" onClick={() => {
@@ -101,7 +100,8 @@ export class Index extends React.Component {
                       <span>name</span>
                     </button>
                   </div>
-                </div>
+                </div> : ''}
+                
 
               </div>
             );

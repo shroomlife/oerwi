@@ -1,5 +1,5 @@
 # app building node
-FROM node:12.8.1 as build-deps
+FROM node:latest as build-deps
 
 WORKDIR /usr/src/app
 ENV HOMEDIR=/usr/src/app
@@ -10,7 +10,7 @@ COPY . ./
 RUN yarn build
 
 # sever node
-FROM node:12.8.1
+FROM node:latest
 
 WORKDIR /usr/src/app
 ENV HOMEDIR=/usr/src/app

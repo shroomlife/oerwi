@@ -101,7 +101,7 @@ class App extends React.Component {
 
         let parsedStateListsNew = {};
         parsedState.lists.forEach((list) => {
-          list.menuOpened = DEFAULT_LIST.menuOpened;
+          list.menuOpened = false;
           list.locked = list.locked || DEFAULT_LIST.locked;
 
           if(String(list.id).length < 16) {
@@ -493,7 +493,7 @@ class App extends React.Component {
           </a>
           <div className="navbar-right">
             
-          <span className="badge badge-danger version-badge">alpha6.1</span>
+          <span className="badge badge-danger version-badge">{process.env.version}{process.env.versionSuffix}</span>
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
