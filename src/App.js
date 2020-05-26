@@ -101,7 +101,7 @@ class App extends React.Component {
 
         let parsedStateListsNew = {};
         parsedState.lists.forEach((list) => {
-          list.menuOpened = DEFAULT_LIST.menuOpened;
+          list.menuOpened = false;
           list.locked = list.locked || DEFAULT_LIST.locked;
 
           if(String(list.id).length < 16) {

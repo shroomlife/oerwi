@@ -2,8 +2,7 @@
   "name": "oerwi",
   "version": "0.6.3",
   "dependencies": {
-    "express": "4.17.1",
-    "rethinkdb": "2.3.3"
+    "express": "4.17.1"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -64,7 +63,7 @@
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.0",
-    "jquery": "3.4.1",
+    "jquery": "3.5.1",
     "mini-css-extract-plugin": "0.8.0",
     "moment": "2.24.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
@@ -105,7 +104,10 @@
   "resolutions": {
     "serialize-javascript": "^2.1.1",
     "handlebars": "^4.3.0",
-    "react-scripts": "^3.4.0"
+    "react-scripts": "^3.4.0",
+    "minimist": "^0.2.1",
+    "acorn": "^7.1.1",
+    "kind-of": "^6.0.3"
   },
   "jest": {
     "roots": [
