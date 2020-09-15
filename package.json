@@ -2,7 +2,9 @@
   "name": "oerwi",
   "version": "0.6.3",
   "dependencies": {
-    "express": "4.17.1"
+    "acorn": "^7.1.1",
+    "express": "4.17.1",
+    "handlebars": "^4.3.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -28,6 +30,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.5.5",
+    "@babel/helper-call-delegate": "^7.11.4",
     "@rocketseat/unform": "1.5.1",
     "@svgr/webpack": "4.3.2",
     "@typescript-eslint/eslint-plugin": "2.0.0",
@@ -102,12 +105,17 @@
     "workbox-webpack-plugin": "5.0.0"
   },
   "resolutions": {
-    "serialize-javascript": "^2.1.1",
+    "serialize-javascript": "^3.1.0",
     "handlebars": "^4.3.0",
     "react-scripts": "^3.4.0",
     "minimist": "^0.2.1",
     "acorn": "^7.1.1",
-    "kind-of": "^6.0.3"
+    "kind-of": "^6.0.3",
+    "websocket-extensions": "^0.1.4",
+    "lodash": "^4.17.19",
+    "elliptic": "^6.5.3",
+    "http-proxy": "^1.18.1",
+    "yargs-parser": "^13.1.2"
   },
   "jest": {
     "roots": [
