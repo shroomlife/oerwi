@@ -1,9 +1,9 @@
-name: Push Docker Image (master)
+name: Push Docker Image (main)
 
 on:
   push:
     branches:
-    - master
+    - main
 
 jobs:
 
@@ -12,12 +12,12 @@ jobs:
     runs-on: ubuntu-latest
  
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@main
       with:
-        ref: master
+        ref: main
     - name: docker build
-      run: docker build . --tag shroomlife/oerwi:master
+      run: docker build . --tag shroomlife/oerwi:latest
     - name: docker login
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
     - name: docker push
-      run: docker push shroomlife/oerwi:master
+      run: docker push shroomlife/oerwi:latest
