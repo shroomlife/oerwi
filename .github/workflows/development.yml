@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
  
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@main
       with:
         ref: development
     - name: docker build
