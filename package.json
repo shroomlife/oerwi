@@ -79,7 +79,6 @@
   },
   "resolutions": {
     "elliptic": ">= 6.5.3",
-    "handlebars": ">= 4.3.0",
     "http-proxy": ">= 1.18.1",
     "ini": ">= 1.3.8",
     "kind-of": ">= 6.0.3",
@@ -94,7 +93,7 @@
   "dependencies": {
     "acorn": "7.1.1",
     "express": "4.17.1",
-    "handlebars": "4.3.0"
+    "handlebars": "4.7.7"
   },
   "devDependencies": {
     "@babel/core": "7.5.5",
